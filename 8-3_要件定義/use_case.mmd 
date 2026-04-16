@@ -1,0 +1,12 @@
+usecaseDiagram
+    actor "ユーザー" as user
+    package "本屋システム" {
+        usecase "ログイン" as UC1
+        usecase "商品検索" as UC2
+        usecase "購入" as UC3
+        userase "在庫確認" as UC4
+    }
+    user --> UC1
+    user --> UC2
+    user --> UC3
+    user --> UC4
