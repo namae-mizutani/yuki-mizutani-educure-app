@@ -1,4 +1,3 @@
-```mermaid
 usecaseDiagram
     actor "会員" as user
     actor "在庫管理者" as staff
@@ -22,8 +21,7 @@ usecaseDiagram
     staff --> UC4
     staff --> UC7
     staff --> UC6
-    
+
     master -->UC1
     master -->UC5
     master -->UC7
-```
