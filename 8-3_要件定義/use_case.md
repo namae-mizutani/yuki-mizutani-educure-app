@@ -1,3 +1,4 @@
+```mermaid
 usecaseDiagram
     actor "会員" as user
     actor "在庫管理者" as staff
@@ -12,16 +13,19 @@ usecaseDiagram
         usecase "購入履歴" as UC6
         usecase "ログアウト" as UC7
     }
+
     user --> UC1
     user --> UC2
     user --> UC3
+    user --> UC6
     user --> UC7
 
     staff --> UC1
     staff --> UC4
-    staff --> UC7
     staff --> UC6
+    staff --> UC7
 
-    master -->UC1
-    master -->UC5
-    master -->UC7
+    master --> UC1
+    master --> UC5
+    master --> UC7
+```
