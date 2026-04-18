@@ -1,5 +1,4 @@
 ```mermaid
-graph TD
 usecaseDiagram
     actor "会員" as user
     actor "在庫管理者" as staff
