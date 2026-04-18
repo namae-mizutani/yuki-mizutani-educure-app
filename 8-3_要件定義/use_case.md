@@ -5,29 +5,29 @@ graph TD
     Master((システム管理者))
 
     subgraph System
-        Use1(ログイン)
-        Use2(商品検索)
-        Use3(購入)
-        Use4(在庫確認)
-        Use5(売上集計)
-        Use6(購入履歴)
-        Use7(ログアウト)
+        Use1(ログインする)
+        Use2(商品検索する)
+        Use3(購入する)
+        Use4(在庫確認する)
+        Use5(売上集計する)
+        Use6(購入履歴する)
+        Use7(ログアウトする)
     end
 
-    User --> UC1
-    User --> UC2
-    User --> UC3
-    User --> UC6
-    User --> UC7
+    User --> Us1
+    User --> Us2
+    User --> Us3
+    User --> Us6
+    User --> Us7
 
-    Staff --> UC1
-    Staff --> UC4
-    Staff --> UC6
-    Staff --> UC7
+    Staff --> Us1
+    Staff --> Us4
+    Staff --> Us6
+    Staff --> Us7
 
-    Master --> UC1
-    Master --> UC5
-    Master --> UC7
+    Master --> Us1
+    Master --> Us5
+    Master --> Us7
 ```
 
 
