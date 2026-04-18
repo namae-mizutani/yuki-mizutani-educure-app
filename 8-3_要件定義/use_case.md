@@ -14,20 +14,20 @@ graph TD
         Use7(ログアウトする)
     end
 
-    User --> Us1
-    User --> Us2
-    User --> Us3
-    User --> Us6
-    User --> Us7
+    User --> Use1
+    User --> Use2
+    User --> Use3
+    User --> Use6
+    User --> Use7
 
-    Staff --> Us1
-    Staff --> Us4
-    Staff --> Us6
-    Staff --> Us7
+    Staff --> Use1
+    Staff --> Use4
+    Staff --> Use6
+    Staff --> Use7
 
-    Master --> Us1
-    Master --> Us5
-    Master --> Us7
+    Master --> Use1
+    Master --> Use5
+    Master --> Use7
 ```
 
 
