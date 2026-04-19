@@ -10,18 +10,13 @@ erDiagram
         string password
         string role
         timestamp created_at
-        timestamp updated_at
-        timestamp deleted_at
-
     }
+
     books {
         int id PK
         string title
         int price
         string category
-        timestamp created_at
-        timestamp updated_at
-        timestamp deleted_at
     }
 
     stocks{
@@ -29,17 +24,12 @@ erDiagram
         int book_id FK
         int stock
         timestamp created_at
-        timestamp updated_at
-        timestamp deleted_at
     }
 
     sales {
         int id  
-        int user_id FK
         int book_id FK
         int quantity
         timestamp created_at
-        timestamp updated_at
-        timestamp deleted_at
     }
 ```
