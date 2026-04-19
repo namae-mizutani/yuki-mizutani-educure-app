@@ -11,6 +11,8 @@
 | role | VARCHAR(10) | NOT NULL | 役割 |
 | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 登録日時 |
 | updated_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 更新日時 |
+| deleted_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 削除日時 |
+
 
 # テーブル名　: books
 ##　概要
@@ -25,6 +27,8 @@
 | category | VARCHAR(10) | NOT NULL | カテゴリ |
 | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 登録日時 |
 | updated_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 更新日時 |
+| deleted_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 削除日時 |
+
 
 # テーブル名　: stocks
 ##　概要
@@ -38,6 +42,8 @@
 | stock | INT(100) | NOT NULL | 在庫数 |
 | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 登録日時 |
 | updated_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 更新日時 |
+| deleted_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 削除日時 |
+
 
 # テーブル名　: sales
 ##　概要
@@ -52,3 +58,5 @@
 | quantity | INT(10) | NOT NULL | 購買数 |
 | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 登録日時 |
 | updated_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 更新日時 |
+| deleted_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | 削除日時 |
+
