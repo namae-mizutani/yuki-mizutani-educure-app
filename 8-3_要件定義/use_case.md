@@ -18,6 +18,8 @@ graph TD
         U14(14.商品更新・削除)
         U15(15.全ユーザー一覧)
         U16(16.ログアウト)
+        U17(17.外部API連携)
+        U18(18.CSV出力)
     end
 
     User --> U1
@@ -34,11 +36,14 @@ graph TD
     Staff --> U13
     Staff --> U14
     Staff --> U16
+    Staff --> U17
 
     Master --> U1
     Master --> U12
     Master --> U15
     Master --> U16
+    Master --> U17
+    Master --> U18
 ```
 
 

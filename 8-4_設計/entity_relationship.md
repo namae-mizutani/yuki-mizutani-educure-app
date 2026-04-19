@@ -5,38 +5,37 @@ erDiagram
    books ||--|| stocks:""
 
     users {
+        int id PK
         string user_name
         string password
-        int id PK
         string role
-        datetime created_at
-        datetime updated_at
+        timestamp created_at
+        timestamp updated_at
 
     }
     books {
+        int id Pk
         string title
         int price
-        int id Pk
         string category
-        datetime created_at
-        datetime updated_at
+        timestamp created_at
+        timestamp updated_at
     }
 
     stocks{
-        int stock
         int id Pk
         int book_id FK
-        datetime created_at
-        datetime updated_at
+        int stock
+        timestamp created_at
+        timestamp updated_at
     }
 
     sales {
-        int sale_id   
         int id  
         int user_id FK
         int book_id FK
         int quantity
-        datetime created_at
-        datetime updated_at
+        timestamp created_at
+        timestamp updated_at
     }
 ```
