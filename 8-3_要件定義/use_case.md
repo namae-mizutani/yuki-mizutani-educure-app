@@ -19,6 +19,10 @@ graph TD
         UC16(ログアウトする)
         UC17(外部APIで商品情報を取得する)
         UC18(CSVを出力する)
+        UC19(マイページで名前とパスワードを表示する)
+        UC20(購入履歴を確認できる)
+        UC21(注文確認ができる)
+        
     end
 
     User --> UC1
@@ -28,6 +32,8 @@ graph TD
     User --> UC7
     User --> UC8
     User --> UC16
+    User  --> UC19
+    User  --> UC20
 
     Staff --> UC1
     Staff --> UC4
@@ -36,6 +42,7 @@ graph TD
     Staff --> UC14
     Staff --> UC16
     Staff --> UC17
+    Staff --> UC21
 
     Master --> UC1
     Master --> UC4
