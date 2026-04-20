@@ -30,6 +30,7 @@ graph TD
     User --> UC16
 
     Staff --> UC1
+    Staff --> UC4
     Staff --> UC11
     Staff --> UC13
     Staff --> UC14
@@ -37,6 +38,7 @@ graph TD
     Staff --> UC17
 
     Master --> UC1
+    Master --> UC4
     Master --> UC12
     Master --> UC15
     Master --> UC16
