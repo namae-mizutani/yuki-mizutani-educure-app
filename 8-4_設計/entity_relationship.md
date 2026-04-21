@@ -1,8 +1,8 @@
 ```mermaid
 erDiagram
-   users ||--o{ sales :""}
-   books ||--o{ sales:""}
-   books ||--|| stocks:""
+    users ||--o{ sales : ""
+    books ||--o{ stocks : ""
+    books ||--o{ sales : ""
 
     users {
         int id PK
@@ -21,15 +21,15 @@ erDiagram
         string category
     }
 
-    stocks{
+    stocks {
         int id PK
         int book_id FK
         int stock
     }
 
     sales {
-        int id  
-        int user_id
+        int id PK
+        int user_id FK
         int book_id FK
         int quantity
         int stock
