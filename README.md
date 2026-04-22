@@ -1,1 +1,1 @@
-figma URL(https://www.figma.com/design/9aunXW0bIJ9bpIHl3PIVqH/book_%E8%A8%AD%E8%A8%88?node-id=0-1&t=PRcEx7BSWBThTPTv-1)
+figma URL(https://www.figma.com/design/9aunXW0bIJ9bpIHl3PIVqH/book_%E8%A8%AD%E8%A8%88?t=yZv8LudqAhdK1q27-1)
