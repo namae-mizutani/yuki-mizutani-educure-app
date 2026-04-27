@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <titile>トップページ</titile>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <form action="/menu" method="post">
+        <h1>ログイン</h1>
+        <label for="name">名前</label>
+        <input type="name" id="name">
+        <label for="password">パスワード</label>
+        <input type="password" id="password">
+    
+        <button type="button">ログイン</button>
+    </form>
+    <button type="button" th:onclick="|location.href='@{/newuser_registration}">新規登録</button>
+
+    <u>パスワードリセット</u>
+</body>
+
+</html>

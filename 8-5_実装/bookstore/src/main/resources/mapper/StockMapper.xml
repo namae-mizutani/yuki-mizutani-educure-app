@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.mizutani.bookstore.repository.StockMapper">
+    <!-- 全件検索 -->
+    <select id="selectAll" resultType="jp.mizutani.bookstore.entity.Stock">
+        SELECT id, book_id, stock FROM stocks
+    </select>
+    <!-- 1件検索 -->
+    <select id="selectById" resultType="jp.mizutani.bookstore.entity.Stock">
+        SELECT id, book_id, stock FROM stocks WHERE id = #{id}
+    </select>
+    <!-- 登録 -->
+    <insert id="insert">
+        INSERT INTO stocks (book_id,stock)
+        VALUES
+        (#{book_id}, #{stock})
+    </insert>
+
+    <update id="update">
+        PDATE stocks SET stock = #{stock} WHERE id = #{id}
+    </update>
+</mapper>

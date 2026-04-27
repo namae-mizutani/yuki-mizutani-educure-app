@@ -1,0 +1,36 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS stocks;
+DROP TABLE IF EXISTS sales;
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    user_name VARCHAR(10) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    role VARCHAR(10) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL
+)
+
+CREATE TABLE books (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(20) NOT NULL,
+    price VARCHAR(10) NOT NULL,
+    category VARCHAR(10) NOT NULL
+)
+
+CREATE TABLE stocks (
+    id SERIAL PRIMARY KEY,
+    book_id INT NOT NULL,
+    stock INT NOT NULL
+)
+
+CREATE TABLE sales (
+    id SERIAL PRIMARY KEY,
+    user_id	INT	NOT NULL,
+    book_id	INT	NOT NULL,
+    quantity	INT	NOT NULL,
+    status	VARCHAR(10)	NOT NULL,
+    created_at	TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)

@@ -14,7 +14,7 @@ graph TD
         UC11(商品一覧を表示する)
         UC12(売上を集計する)
         UC13(商品を新規登録する)
-        UC14(商品を更新・削除する)
+        UC14(商品の在庫数を更新する　商品を削除する)
         UC15(全ユーザー一覧を表示する)
         UC16(ログアウトする)
         UC17(外部APIで商品情報を取得する)
@@ -22,6 +22,9 @@ graph TD
         UC19(マイページで登録情報の確認、変更、退会をする)
         UC20(購入履歴を確認できる)
         UC21(注文確認ができる)
+        UC22(配送ステータス更新できる)
+        UC23(注文を返品.キャンセルする)
+
         
     end
 
@@ -34,6 +37,7 @@ graph TD
     User --> UC16
     User  --> UC19
     User  --> UC20
+    User  --> UC23
 
     Staff --> UC1
     Staff --> UC4
@@ -43,6 +47,7 @@ graph TD
     Staff --> UC16
     Staff --> UC17
     Staff --> UC21
+    Staff --> UC2
 
     Master --> UC1
     Master --> UC4
