@@ -1,1 +1,24 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>購入確認</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    return "purchase_confirmation";
+    <form action="/" method="get">
+        <h1>購入確認</h1>
+        <p>書籍名/価格/購入数</p>
+        <p>
+            <span th:text="${book.title}">/</span>
+            <span th:text="${book.price}">円/</span>
+            <span th:text="${book.quantity}">冊</span>
+        </p>
+        <button type="submit" th:method="post" th:action="@{/purchase_completed"}> 購入</button>
+    </form>
+</body>
+
+</html>

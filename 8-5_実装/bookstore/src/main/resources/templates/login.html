@@ -3,23 +3,21 @@
 
 <head>
     <meta charset="UTF-8">
-    <titile>トップページ</titile>
+    <title>トップページ</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
-    <form action="/menu" method="post">
+    <form th:action="@{/login}" method="post">
         <h1>ログイン</h1>
         <label for="name">名前</label>
-        <input type="name" id="name">
+        <input type="name" id="name" name="name" placeholder="Value">
+        <br>
         <label for="password">パスワード</label>
-        <input type="password" id="password">
-    
+        <input type="password" id="password" name="password" placeholder="Value">
+        <br>
         <button type="button">ログイン</button>
+        <button type="button" th:onclick="|location.href='@{/newuser_registration}">新規登録</button>
     </form>
-    <button type="button" th:onclick="|location.href='@{/newuser_registration}">新規登録</button>
-
-    <u>パスワードリセット</u>
+    <u href="@{password_reset.html}">パスワードリセット</u>
 </body>
-
-</html>

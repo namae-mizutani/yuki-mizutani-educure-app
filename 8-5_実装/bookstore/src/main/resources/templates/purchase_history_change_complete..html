@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>購入履歴変更完了</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <form action="/cancel_order" method="post">
+        <h1>購入履歴変更完了</h1>
+        <p th:text="${message}"></p>
+        <form th:action="@{/top}" method="get">
+            <button type="submit">トップへ戻る</button>
+        </form>
+</body>
+
+</html>

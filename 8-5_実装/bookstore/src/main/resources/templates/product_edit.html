@@ -1,1 +1,34 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品編集</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <form th:action="@{/update-confirm}" method="post">
+        <input type="hidden" name="id" th:value="${book.id}">
+
+        <h1>商品編集</h1>
+        <p>ID: <span th:text="${book.id}"></span></p>
+        <p>書籍名: <span th:text="${book.title}"></span></p>
+
+        <label for="price">価格</label>
+        <input type="text" id="price" name="price" th:value="${book.price}"><br>
+
+        <label for="stock">在庫数</label>
+        <input type="number" id="stock" name="stock" th:value="${book.stock}"><br>
+
+        <button type="submit">更新</button>
+        <a th:href="@{/top}">戻る</a>
+    </form>
+
+    <form th:action="@{/delete}" method="post" onsubmit="return confirm('削除してもよろしいですか？')">
+        <input type="hidden" name="id" th:value="${book.id}">
+        <button type="submit">削除</button>
+    </form>
+</body>
+
+</html>

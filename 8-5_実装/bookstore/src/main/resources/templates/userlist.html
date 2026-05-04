@@ -1,1 +1,22 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー一覧</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <form action="/userlist" method="get">
+        <h1>役職/名前/登録日</h1>
+        <span th:each="user : ${users}">
+            <p th:text="${user.name}">/</p>
+            <p th:text="${user.role}">/</p>
+            <p th:text="${user.createdAt}"></p>
+        </span>
+        <a th:href="@{/menu}">戻る</a>
+    </form>
+</body>
+
+</html>

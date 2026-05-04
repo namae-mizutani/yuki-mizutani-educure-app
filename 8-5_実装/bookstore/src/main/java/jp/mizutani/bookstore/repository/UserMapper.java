@@ -11,9 +11,14 @@ public interface UserMapper {
 
     User selectById(@Param("id") int id);
 
+    User selectByName(String name);
+    
+
     void insert(User user);
 
     void delete(@Param("id") int id);
+
+    void delete(User user);
 
     void update(User user);
 }

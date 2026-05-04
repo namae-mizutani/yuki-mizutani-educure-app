@@ -28,4 +28,9 @@ public class SalesServiceImpl implements SalesService {
     public void insert(Sales sales) {
         salesMapper.insert(sales);
     }
+
+    @Override
+    public List<Sales> findAllGroupedByTitle() {
+        return salesMapper.findAllGroupedByTitle();
+    }
 }

@@ -6,12 +6,36 @@
         SELECT id, user_id AS userId, book_id AS bookId, quantity, stock, created_at as createdAt
     </select>
     <!-- 1件検索 -->
-    <select id="selectById" resultType="jp.mizutani.bookstore.entity.User">
-       SELECT id, user_id AS userId, book_id AS bookId, quantity, stock, created_at as createdAt FROM sales WHERE id = #{id}
+    <select id="selectById" resultType="jp.mizutani.bookstore.entity.Sales">
+       SELECT id, user_id AS userId, book_id AS bookId, 
+       quantity, stock, created_at as createdAt FROM sales WHERE id = #{id}
     </select>
     <!-- 登録 -->
     <insert id="insert">
-        INSERT INTO sales (user_id, book_id, quantity, stock, created_at)
-        VALUES (#{userId}, #{bookId}, #{quantity}, #{stock}, CURRENT_TIMESTAMP)
+        INSERT INTO sales (user_id, book_id, quantity, stock,status, created_at)
+        VALUES (#{userId}, #{bookId}, #{quantity}, #{stock}, '未発送',CURRENT_TIMESTAMP)
     </insert>
+
+    <update id="updateStatusToShipped">
+        UPDATE sales SET status = '発送済' WHERE id = #{orderId}
+    </update>
+
+    <select id="findAllGroupedByTitle" resultType="jp.mizutani.bookstore.entity.Sales">
+        SELECT 
+            b.name AS name, 
+            SUM(s.quantity) AS salesAmount, 
+            SUM(s.quantity * b.price) AS totalSales
+        FROM sales s
+        JOIN books b ON s.book_id = b.id
+        GROUP BY b.name
+    </select>
+
+    <update id="updateStock">
+        UPDATE books  SET stock = stock + #{quantity} WHERE id = #{bookId}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE sales SET status = #{status} WHERE id = #{orderId}
+    </update>
+
 </mapper>

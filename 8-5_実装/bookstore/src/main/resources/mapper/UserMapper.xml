@@ -11,6 +11,10 @@
         SELECT id, user, created_at as createdAt,
             updated_at as updatedAt FROM users WHERE id = #{id}
     </select>
+    <!-- 名前検索 -->
+    <select id="selectByName" resultType="jp.mizutani.bookstore.entity.User">
+        SELECT * FROM users WHERE name = #{name}
+    </select>
     <!-- 登録 -->
     <insert id="insert">
         INSERT INTO users (user, password, role,created_at, updated_at)

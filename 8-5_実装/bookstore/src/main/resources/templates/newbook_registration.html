@@ -1,1 +1,31 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品新規登録</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <form action="/registration" method="post">
+        <h1>商品新規登録</h1>
+       
+        <label for="title">書籍名</label>
+        <input type="text" id="title" name="title">
+        <br>
+        <label for="price">価格</label>
+        <input type="number" id="price" name="price">円
+        <br>
+        <label for="category">カテゴリー</label>
+        <input type="text" id="category" name="category">
+        <br>
+        <label for="stock">在庫数</label>
+        <input type="number" id="stock" name="stock">冊
+        <br>
+        <button type="submit" th:action="@{api/books}" method="get">APIで取得</button>
+        <button type="submit" >登録</button>
+    </form>
+</body>
+
+</html>

@@ -21,4 +21,8 @@
         SET title = #{title}, price = #{price}, category = #{category}
         WHERE id = #{id}
     </update>
+    
+    <delete id="delete">
+        DELETE FROM books WHERE id = #{id}
+    </delete>
 </mapper>

@@ -1,1 +1,24 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>メニュー</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <h1>メニュー</h1>
+    <ul>
+        <li><a th:href="@{/books}">本一覧</a></li>
+
+        <th:block th:if="${role =='在庫管理者' || role == 'システム管理者'}">
+            <li><a th:href="@{/books/new}">新規登録</a></li>
+            <li><a th:href="@{/sales}">売上集計</a></li>
+            <li><a th:href="@{/users}">ユーザー一覧</a></li>
+            <li><a th:href="@{/orders}">注文確認</a></li>
+        </th:block>
+    </ul>
+</body>
+
+</html>

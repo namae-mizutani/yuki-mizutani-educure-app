@@ -1,1 +1,24 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title><購入></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <form action="/purchase" method="post">
+        <h1>購入</h1>
+        <p>書籍名/価格</p>
+        <p><span th:text=${book.title}>/</span>
+            <span th:text=${book.price}>円</span></p>
+        <a> 購入数: 冊</a>
+        <input type="hidden" name="id" th:value="${book.id}">
+        <input type="stock" name="stock" min="1" max="10" value="1">
+        <button type="submit">購入</button>
+        <button type="button" onclick="location:history.back()">トップへ戻る</button>
+    </form>
+</body>
+
+</html>

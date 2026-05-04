@@ -1,1 +1,26 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>購入履歴</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <form action="/purchase_history/{id}(id=${user.id})" method="post">
+        <h1>購入履歴</h1>
+        <p>購入履歴：</p>
+        <p>書籍名/購入数/注文日/配送ステータス</p>
+        <span th:each="book : ${books}">
+            <p th:text="${book.title}">/</p>
+            <p th:text="${book.orderCount}">冊/</p>
+            <p th:text="${book.createdAt}">/</p>
+            <p th:text="${book.status}">/</p>
+        </span>
+        <button type="button" th:formaction="@{/return-product}">返却</button>
+        <button type="submit" th:formaction="@{/cancel-order}">キャンセル</button>
+    </form>
+</body>
+
+</html>

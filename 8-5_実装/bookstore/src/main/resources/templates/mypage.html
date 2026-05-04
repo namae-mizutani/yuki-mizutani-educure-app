@@ -1,1 +1,27 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>マイページ</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <form th:action="@{/mypage/{id}(id=${user.id})}" method="post">
+        <h1>マイページ</h1>
+        <label for="name">名前:</label>
+        <input type="text" id="name">
+        <br>
+        <label for="password">パスワード</label>
+        <input type="password" id="password">
+        <br>
+        <button type="submit">変更</button>
+        <button type="submit">購入履歴</button>
+        <button type="submit" onclick="return confirm('退会してもよろしいですか？')">退会</button>
+        <a th:href="@{/top}">戻る</a>
+
+    </form>
+</body>
+
+</html>

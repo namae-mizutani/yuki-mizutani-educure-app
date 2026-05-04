@@ -1,1 +1,32 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>売上集計</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <form action="/total" method="post">
+        <h1>売上集計</h1>
+        <p>期間</p>
+        <input type="day" th:field="*{startDate}">
+        円 〜
+        <input type="day" th:field="*{endDate}">
+        円
+        <button type="submit">検索</button>
+
+        <p>書籍名/売れた数/売上金額</p>
+        <span>
+            <a th:href="@{book/{id}(id=${book.id})}" th:text="${book.name}">/
+                <a th:href="@{book/{id}(id=${book.id})}" th:text="${book.salesAmount}">冊</span>
+        <a th:herf="@{book/{id}(id=${book.id})}" th:text="${book.totalSales}">円</a>
+        <button type="button" onclick="location.href='/api/books/download'">CSV出力</button>
+        <button type="button" onclick="location.href='/api/books/upload'">CSVダウンロード</button>
+        <a th:href="@{/menu}">戻る</a>
+
+    </form>
+</body>
+
+</html>

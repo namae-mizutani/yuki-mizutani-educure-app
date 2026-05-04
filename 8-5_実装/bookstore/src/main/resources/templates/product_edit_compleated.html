@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品編集完了</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <p th:text="${message}"></p>
+    <form th:action="@{/top}" method="get">
+        <button type="submit">トップへ戻る</button>
+    </form>
+</body>
+
+</html>

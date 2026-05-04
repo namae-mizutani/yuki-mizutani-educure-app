@@ -1,1 +1,64 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>書籍一覧 かえてコピペして修正してない</title>
+</head>
+
+<body>
+    <h1>書籍一覧</h1>
+    <a>
+        <strong>検索</strong>
+    </a>
+    <form th:action="@{/books}" th:object="${bookForm}" method="get">
+        <div>
+            <label for="title">タイトル：</label>
+            <input type="text" th:field="*{title}">
+        </div>
+        <div style="display:flex;">
+            <label for="price">価格:</label>
+            <input type="number" th:field="*{minPrice}">
+            円 〜
+            <input type="number" th:field="*{maxPrice}">
+            円
+        </div>
+        <div>
+            <button type="submit">検索</button>
+            <button type="button" onclick="location.href='/books'">クリア</button>
+        </div>
+    </form>
+
+    <a th:href="@{/books/create}">新規作成</a>
+    <table border="1" `>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>書籍名</th>
+                <th>価格</th>
+                <th>カテゴリ</th>
+                <th>在庫数</th>
+                <th>購入</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.price}"></td>
+                <td>
+                    <span th:each="cat : ${book.categories}" th:text="${cat.name} + ' '"></span>
+                </td>
+                <td th:text="${book.stock}"></td>
+                <button th:action="purchase/book.id" type="submit">購入</button>
+            </tr>
+        </tbody>
+    </table>
+    <form th:action="@{/mypage}" method="get">
+        <button type="submit">マイページへ</button>
+    </form>
+    <form th:action="@{/}"  method="get">
+        <button type="submit">ログアウト</button>
+    </form>
+</body>
+
+</html>
