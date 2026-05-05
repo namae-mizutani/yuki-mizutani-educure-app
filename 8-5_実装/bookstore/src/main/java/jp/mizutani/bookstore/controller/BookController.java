@@ -1,7 +1,7 @@
 package jp.mizutani.bookstore.controller;
 
 import java.io.IOException;
-
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -33,6 +33,8 @@ public class BookController {
 
     @GetMapping("/top")
     public String top(Model model) {
+        List<Book> bookList = bookService.selectAll();
+        model.addAttribute("books", bookList);
         model.addAttribute("bookForm", new BookForm());
         return "top";
     }
@@ -42,13 +44,7 @@ public class BookController {
         model.addAttribute("bookForm", new BookForm());
         return "newbook_registration";
     }
-
-    // @GetMapping("/book list")
-    // public String bookList() {
-    //     return "top";
-    // }
-
-
+    
     @PostMapping("/registration")
     public String registration(@Validated @ModelAttribute BookForm form, Model model) {
         Book book = new Book();
@@ -62,8 +58,14 @@ public class BookController {
         stock.setStock(form.getStock());
         stockService.insert(stock);
         model.addAttribute("message", " 登録しました");
-        return "redirect:/";
+        return "newbook_register_completed";
     }
+    // @GetMapping("/book list")
+    // public String bookList() {
+    //     return "top";
+    // }
+
+
 
     // @PostMapping("/delete/{id}")
     // public String userDelete(@ModelAttribute BookForm form) {

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.mizutani.bookstore.repository.BookMapper">
+    <insert id="insert">
+        INSERT INTO books (title, price, category)
+        VALUES (#{title}, #{price}, #{category})
+    </insert>
     <!-- 全件検索 -->
     <select id="selectAll" resultType="jp.mizutani.bookstore.entity.Book">
-        SELECT id, title, price, category FROM books
+        SELECT b.id, b.title, b.price, b.category, s.stock 
+        FROM books b
+        LEFT JOIN stocks s ON b.id = s.book_id
     </select>
     <!-- 1件検索 -->
     <select id="selectById" resultType="jp.mizutani.bookstore.entity.Book">
         SELECT id, title, price, category FROM books WHERE id = #{id}
     </select>
-    <!-- 登録 -->
-    <insert id="insert">
-        INSERT INTO books (title, price, category)
-        VALUES (#{title}, #{price}, #{category})
-    </insert>
 
     <update id="update">
         UPDATE books 

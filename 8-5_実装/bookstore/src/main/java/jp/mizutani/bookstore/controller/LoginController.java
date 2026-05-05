@@ -39,6 +39,7 @@ public class LoginController {
             return "login";
         }
         session.setAttribute("role", user.getRole());
+        session.setAttribute("loginId", user.getId());
         return "redirect:/menu";
     }
 
