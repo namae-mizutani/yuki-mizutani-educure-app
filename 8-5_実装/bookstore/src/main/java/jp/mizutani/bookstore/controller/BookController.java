@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import jp.mizutani.bookstore.entity.Book;
 import jp.mizutani.bookstore.entity.Stock;
 import jp.mizutani.bookstore.form.BookForm;
@@ -18,29 +19,35 @@ import jp.mizutani.bookstore.service.BookService;
 import jp.mizutani.bookstore.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("/books")
 @RequiredArgsConstructor
-@RestController
+@RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
     private final StockService stockService;
     private final BookMapper bookMapper;
 
-    @GetMapping("/book list")
-    public String bookList() {
+    @GetMapping("/top")
+    public String top(Model model) {
+        model.addAttribute("bookForm", new BookForm());
         return "top";
     }
 
-    @GetMapping("/top")
-    public String top() {
-        return "top";
+    @GetMapping("/new")
+    public String newBookRegistration(Model model) {
+        model.addAttribute("bookForm", new BookForm());
+        return "newbook_registration";
     }
+
+    // @GetMapping("/book list")
+    // public String bookList() {
+    //     return "top";
+    // }
+
 
     @PostMapping("/registration")
     public String registration(@Validated @ModelAttribute BookForm form, Model model) {
@@ -58,11 +65,11 @@ public class BookController {
         return "redirect:/";
     }
 
-    @PostMapping("/delete/{id}")
-    public String userDelete(@ModelAttribute BookForm form) {
-        bookService.delete(form.getId());
-        return "product_edit_completed";
-    }
+    // @PostMapping("/delete/{id}")
+    // public String userDelete(@ModelAttribute BookForm form) {
+    //     bookService.delete(form.getId());
+    //     return "product_edit_completed";
+    // }
 
     @GetMapping("/edit")
     public String productEdit(@RequestParam("id") int id, Model model) {

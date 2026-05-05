@@ -7,13 +7,12 @@
     </select>
     <!-- 1件検索 -->
     <select id="selectById" resultType="jp.mizutani.bookstore.entity.Book">
-        SELECT id, title, price, category booksFROM books WHERE id = #{id}
+        SELECT id, title, price, category FROM books WHERE id = #{id}
     </select>
     <!-- 登録 -->
     <insert id="insert">
         INSERT INTO books (title, price, category)
-        VALUES
-        (#{title}, #{price}, #{category})
+        VALUES (#{title}, #{price}, #{category})
     </insert>
 
     <update id="update">

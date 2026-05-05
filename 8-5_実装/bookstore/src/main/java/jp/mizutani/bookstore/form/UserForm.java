@@ -1,6 +1,7 @@
 package jp.mizutani.bookstore.form;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,10 @@ import lombok.NoArgsConstructor;
 public class UserForm {
     private int id;
     @NotBlank(message = "名前を入力してください")
+    @Size(min = 1, max = 20, message = "20文字以内で入力してください")
     private String name;
     @NotBlank(message = "パスワードが違います。正しいパスワードを入力してください。")
+    @Size(min = 1, max = 20, message = "20文字以内で入力してください")
     private String password;
     private String role;
 }

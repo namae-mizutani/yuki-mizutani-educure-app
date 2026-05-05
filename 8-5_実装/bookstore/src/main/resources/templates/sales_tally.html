@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <form action="/total" method="post">
+    <form action="/tally" method="post">
         <h1>売上集計</h1>
         <p>期間</p>
         <input type="day" th:field="*{startDate}">
@@ -18,10 +18,11 @@
         <button type="submit">検索</button>
 
         <p>書籍名/売れた数/売上金額</p>
-        <span>
-            <a th:href="@{book/{id}(id=${book.id})}" th:text="${book.name}">/
-                <a th:href="@{book/{id}(id=${book.id})}" th:text="${book.salesAmount}">冊</span>
-        <a th:herf="@{book/{id}(id=${book.id})}" th:text="${book.totalSales}">円</a>
+        <span th:each="book : ${salesList}">
+            <a th:href="@{book/{id}(id=${book.orderId})}" th:text="${book.name}">/</a>
+            <a th:href="@{book/{id}(id=${book.orderId})}" th:text="${book.salesAmount}">冊</a>
+            <a th:herf="@{book/{id}(id=${book.orderId})}" th:text="${book.totalSales}">円</a>
+        </span>
         <button type="button" onclick="location.href='/api/books/download'">CSV出力</button>
         <button type="button" onclick="location.href='/api/books/upload'">CSVダウンロード</button>
         <a th:href="@{/menu}">戻る</a>

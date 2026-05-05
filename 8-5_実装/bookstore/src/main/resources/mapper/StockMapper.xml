@@ -17,9 +17,10 @@
     </insert>
 
     <update id="update">
-        PDATE stocks SET stock = #{stock} WHERE id = #{id}
+        UPDATE stocks SET stock = #{stock} WHERE id = #{id}
     </update>
     
     <update id="updateStock">
-    UPDATE stocks SET stock = quantity - #{count} WHERE book_id = #{bookid}
+    UPDATE stocks SET stock = stock - #{count} WHERE book_id = #{bookid}
+    </update>
 </mapper>

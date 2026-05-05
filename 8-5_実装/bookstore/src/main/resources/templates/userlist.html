@@ -8,15 +8,14 @@
 </head>
 
 <body>
-    <form action="/userlist" method="get">
-        <h1>役職/名前/登録日</h1>
-        <span th:each="user : ${users}">
-            <p th:text="${user.name}">/</p>
-            <p th:text="${user.role}">/</p>
-            <p th:text="${user.createdAt}"></p>
-        </span>
-        <a th:href="@{/menu}">戻る</a>
-    </form>
+    <h1>役職/名前/登録日</h1>
+    <span th:each="user : ${users}">
+        <span th:text="${user.name}"></span> |
+        <span th:text="${user.role}"></span> |
+        <span th:text="${#temporals.format(user.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
+    </span>
+    <br>
+    <a th:href="@{/menu}">戻る</a>
 </body>
 
 </html>

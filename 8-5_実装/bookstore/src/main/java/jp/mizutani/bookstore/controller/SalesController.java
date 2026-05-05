@@ -1,12 +1,12 @@
 package jp.mizutani.bookstore.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import jp.mizutani.bookstore.entity.Sales;
 import jp.mizutani.bookstore.form.SalesForm;
@@ -16,7 +16,6 @@ import jp.mizutani.bookstore.service.SalesService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/sales")
 @RequiredArgsConstructor
 public class SalesController {
     @Autowired
@@ -26,18 +25,23 @@ public class SalesController {
     private final SalesService salesService;
 
     @GetMapping("/total")
-    public String displaySalesTally(Model model) {
+    public String total(Model model) {
+        model.addAttribute("salesForm", new SalesForm());
+        model.addAttribute("salesList", new ArrayList<Sales>());
+        return "sales_tally";
+    }
 
+    @PostMapping("/tally")
+    public String displaySalesTally(Model model) {
         List<Sales> salesList = salesService.findAllGroupedByTitle();
         model.addAttribute("salesList", salesList);
+        model.addAttribute("salesForm", new SalesForm());
         return "sales_tally";
     }
 
     @GetMapping("/ordercheck")
     public String displayOrderCheck(Model model) {
-        List<SalesForm> orderList = salesMapper.findAllOrders();
-
-        model.addAttribute("books", orderList);
+        model.addAttribute("books", salesMapper.findAllOrders());
         return "ordercheck";
     }
 

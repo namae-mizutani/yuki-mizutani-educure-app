@@ -68,7 +68,7 @@ public class BookServiceImpl implements BookService {
                 
                 Book book = new Book();
                 book.setTitle(data[1]);
-                book.setPrice(Integer.parseInt(data[2])); // int型に合わせて変換
+                book.setPrice(Integer.parseInt(data[2])); 
                 book.setCategory(data[3]);
 
                 bookMapper.insert(book);

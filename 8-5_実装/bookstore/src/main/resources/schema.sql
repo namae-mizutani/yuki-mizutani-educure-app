@@ -9,22 +9,22 @@ CREATE TABLE users (
     password VARCHAR(100) NOT NULL,
     role VARCHAR(10) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL
-)
+    deleted_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
 
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,
     title VARCHAR(20) NOT NULL,
     price VARCHAR(10) NOT NULL,
     category VARCHAR(10) NOT NULL
-)
+);
 
 CREATE TABLE stocks (
     id SERIAL PRIMARY KEY,
     book_id INT NOT NULL,
     stock INT NOT NULL
-)
+);
 
 CREATE TABLE sales (
     id SERIAL PRIMARY KEY,
@@ -33,4 +33,4 @@ CREATE TABLE sales (
     quantity	INT	NOT NULL,
     status	VARCHAR(10)	NOT NULL,
     created_at	TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.mizutani.bookstore.repository.SalesMapper">
+<select id="findAllOrders" resultType="jp.mizutani.bookstore.form.SalesForm">
+    SELECT 
+        s.id AS orderId,
+        s.book_id AS bookId,
+        b.title AS title,
+        s.quantity AS orderCount,
+        s.status AS status,
+        s.created_at AS createdAt
+    FROM sales s
+    JOIN books b ON s.book_id = b.id
+    ORDER BY s.created_at DESC
+</select>
     <!-- 全件検索 -->
     <select id="selectAll" resultType="jp.mizutani.bookstore.entity.Sales">
         SELECT id, user_id AS userId, book_id AS bookId, quantity, stock, created_at as createdAt
