@@ -3,21 +3,25 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><購入></title>
+    <title>購入</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
-    <form action="/purchase" method="post">
+    <form th:action="@{/books/purchaseconfirmation}" method="post">
         <h1>購入</h1>
         <p>書籍名/価格</p>
-        <p><span th:text=${book.title}>/</span>
-            <span th:text=${book.price}>円</span></p>
-        <a> 購入数: 冊</a>
-        <input type="hidden" name="id" th:value="${book.id}">
-        <input type="stock" name="stock" min="1" max="10" value="1">
+        <p><span th:text="${book.title}"></span>/
+            <span th:text="${book.price}"></span>円
+        </p>
+        <a> 購入数:
+            <input type="hidden" name="id" th:value="${book.id}">
+            <input type="number" name="quantity" min="1" max="10" value="1">
+            冊</a>
+        <p th:if="${message}" th:text="${message}" style="color: red;"></p>
         <button type="submit">購入</button>
-        <button type="button" onclick="location:history.back()">トップへ戻る</button>
+        <br>
+        <a th:href="@{/books/top}">[トップへ戻る]</a>
     </form>
 </body>
 

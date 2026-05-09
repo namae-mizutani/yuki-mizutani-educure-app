@@ -8,20 +8,23 @@
 </head>
 
 <body>
-    <form th:action="@{/mypage/{id}(id=${user.id})}" method="post">
+    <form th:action="@{/users/update}" method="post" th:object="${user}">
         <h1>マイページ</h1>
-        <label for="name">名前:</label>
-        <input type="text" id="name">
+        <input type="hidden" name="id" th:value="*{id}">
+
+        <label for="name">名前：</label>
+        <input type="text" id="name" name="name" th:value="*{name}">
         <br>
-        <label for="password">パスワード</label>
-        <input type="password" id="password">
+        <label for="password">パスワード：</label>
+        <input type="password" id="password" name="password">
         <br>
         <button type="submit">変更</button>
-        <button type="submit">購入履歴</button>
-        <button type="submit" onclick="return confirm('退会してもよろしいですか？')">退会</button>
-        <a th:href="@{/top}">戻る</a>
-
+        <p th:if="${message}" th:text="${message}"></p>
+        <button type="submit" th:formaction="@{/users/purchasehistory}" formmethod="get">購入履歴</button>
+        <button type="submit" th:formaction="@{/users/withdraw}" onclick="return confirm('退会してもよろしいですか？')"
+            method="post">退会</button>
     </form>
+    <a th:href="@{/books/top}">戻る</a>
 </body>
 
 </html>

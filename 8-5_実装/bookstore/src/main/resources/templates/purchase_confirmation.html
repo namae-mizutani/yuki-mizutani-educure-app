@@ -8,16 +8,17 @@
 </head>
 
 <body>
-    return "purchase_confirmation";
-    <form action="/" method="get">
+    <form th:action="@{/books/purchasecompleted}" method="post">
+        <input type="hidden" name="id" th:value="${book.id}">
+        <input type="hidden" name="quantity" th:value="${quantity}">
         <h1>購入確認</h1>
         <p>書籍名/価格/購入数</p>
         <p>
-            <span th:text="${book.title}">/</span>
-            <span th:text="${book.price}">円/</span>
-            <span th:text="${book.quantity}">冊</span>
+            <span th:text="${book.title}"></span>/
+            <span th:text="${book.price}"></span>円/
+            <span th:text="${quantity}"></span>冊
         </p>
-        <button type="submit" th:method="post" th:action="@{/purchase_completed"}> 購入</button>
+        <button type="submit"> 購入</button>
     </form>
 </body>
 

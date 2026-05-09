@@ -33,4 +33,10 @@ public class StockServiceImpl implements StockService {
     public void update(Stock stock) {
         stockMapper.update(stock);
     }
+
+    @Override
+    public void delete(int id) {
+        stockMapper.delete(id);
+    }
+
 }

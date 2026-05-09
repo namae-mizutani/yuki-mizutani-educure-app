@@ -11,7 +11,9 @@ public class SalesForm {
     private int orderId;      
     private int bookId;       
     private String title;    
-    private int orderCount;  
+    private int quantity;  
     private String status;    
     private String createdAt; 
+    private String startDate;
+    private String endDate;
 }

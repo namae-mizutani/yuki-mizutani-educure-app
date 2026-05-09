@@ -5,23 +5,30 @@
     <insert id="insert">
        INSERT INTO stocks (book_id, stock) VALUES (#{bookId}, #{stock})
     </insert>
+
+    <update id="updateStock">
+        UPDATE stocks SET stock = stock - #{count} WHERE book_id = #{bookid}
+    </update>
+    <!-- 1件検索 -->
+    <select id="selectById" resultType="jp.mizutani.bookstore.entity.Stock">
+        SELECT id,book_id, stock FROM stocks WHERE book_id = #{id}
+    </select>
+
+    <update id="update">
+        UPDATE stocks SET stock = #{stock} WHERE book_id= #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM stocks WHERE book_id = #{id}
+    </delete>
+
     <!-- 全件検索 -->
     <select id="selectAll" resultType="jp.mizutani.bookstore.entity.Stock">
         SELECT b.id, b.title, b.price, b.category, s.stock 
         FROM books b 
         LEFT JOIN stocks s ON b.id = s.book_id
     </select>
-    <!-- 1件検索 -->
-    <select id="selectById" resultType="jp.mizutani.bookstore.entity.Stock">
-        SELECT id, book_id, stock FROM stocks WHERE id = #{id}
-    </select>
    
-
-    <update id="update">
-        UPDATE stocks SET stock = #{stock} WHERE id = #{id}
-    </update>
     
-    <update id="updateStock">
-    UPDATE stocks SET stock = stock - #{count} WHERE book_id = #{bookid}
-    </update>
+    
 </mapper>

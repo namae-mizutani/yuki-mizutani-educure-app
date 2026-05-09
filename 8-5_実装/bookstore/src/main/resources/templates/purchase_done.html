@@ -8,12 +8,11 @@
 </head>
 
 <body>
-    <form action="/cancel_order" method="post">
+    <form th:action="@{/books/top}" method="get">
         <h1>購入履歴変更完了</h1>
-        <p th:text="${message}"></p>
-        <form th:action="@{/top}" method="get">
-            <button type="submit">トップへ戻る</button>
-        </form>
+        <p th:text="${message}"> </p>
+        <button type="submit">トップへ戻る</button>
+    </form>
 </body>
 
 </html>

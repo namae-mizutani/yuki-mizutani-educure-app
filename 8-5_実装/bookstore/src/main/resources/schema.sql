@@ -30,7 +30,7 @@ CREATE TABLE sales (
     id SERIAL PRIMARY KEY,
     user_id	INT	NOT NULL,
     book_id	INT	NOT NULL,
-    quantity	INT	NOT NULL,
+    quantity INT NOT NULL,
     status	VARCHAR(10)	NOT NULL,
     created_at	TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

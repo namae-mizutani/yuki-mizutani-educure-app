@@ -10,6 +10,10 @@ public interface SalesService {
 
     void insert(Sales sales);
 
-    List<Sales> findAllGroupedByTitle();
+    List<Sales> findAllGroupedByTitle(String starttime, String endTime);
+
+    List<Sales> selectByUserId(int userId);
+
+    void updateStatus(int id, String status);
 
 }

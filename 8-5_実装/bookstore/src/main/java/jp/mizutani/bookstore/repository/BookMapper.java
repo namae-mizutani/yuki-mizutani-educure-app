@@ -18,4 +18,5 @@ public interface BookMapper {
 
     void delete(int id);
 
+    List<Book> searchBooks(@Param("title") String title);
 }

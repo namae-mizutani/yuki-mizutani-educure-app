@@ -21,4 +21,6 @@ public interface UserMapper {
     void delete(User user);
 
     void update(User user);
+
+    boolean findByName(String name);
 }

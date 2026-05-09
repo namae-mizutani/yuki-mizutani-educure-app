@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+button {
+    background-attachment: center;
+    background-color: #1dcd14;
+    color: #ffffff;
+     border: none;
+    /* border-radius: 5px;
+    padding: 10px 20px;  */
+    white-space: nowrap; 
+}

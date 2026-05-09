@@ -11,11 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserForm {
     private int id;
-    @NotBlank(message = "名前を入力してください")
-    @Size(min = 1, max = 20, message = "20文字以内で入力してください")
+    @Size(min = 1, max = 10, message = "10文字以内で入力してください")
     private String name;
-    @NotBlank(message = "パスワードが違います。正しいパスワードを入力してください。")
-    @Size(min = 1, max = 20, message = "20文字以内で入力してください")
+    @Size(min = 1, max = 10, message = "10文字以内で入力してください")
     private String password;
     private String role;
 }

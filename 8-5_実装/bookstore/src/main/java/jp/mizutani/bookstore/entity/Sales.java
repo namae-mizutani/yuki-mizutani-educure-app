@@ -3,7 +3,7 @@ package jp.mizutani.bookstore.entity;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @Data
@@ -14,6 +14,10 @@ public class Sales {
     private int userId;
     private int bookId;
     private int quantity;
-    private int stock;
-    private LocalDateTime createdAt;
+    private String title;
+    private String status;
+    private LocalDate createdAt;
+    private int orderId;
+    private int salesAmount;
+    private int totalSales;
 }

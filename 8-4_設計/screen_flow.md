@@ -30,7 +30,7 @@ graph TD
 
     D --> A
     F --> A
-    R --> A
+    R --> F
     I --> B
     H --> B
     P --> F

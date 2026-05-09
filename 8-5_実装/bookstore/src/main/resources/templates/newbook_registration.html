@@ -8,23 +8,33 @@
 </head>
 
 <body>
-    <form action="/books/registration" method="post">
+    <form action="/books/registration" th:object="${bookForm}" method="post">
         <h1>商品新規登録</h1>
-       
+
         <label for="title">書籍名</label>
-        <input type="text" id="title" name="title">
+        <input type="text" th:field="*{title}">
+        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></span>
+
         <br>
         <label for="price">価格</label>
-        <input type="number" id="price" name="price">円
+        <input type="number" th:field="*{price}">円
+        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color: red;"></span>
+
         <br>
         <label for="category">カテゴリー</label>
-        <input type="text" id="category" name="category">
+        <input type="text" th:field="*{category}">
+        <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="color: red;"></span>
         <br>
         <label for="stock">在庫数</label>
-        <input type="number" id="stock" name="stock">冊
+        <input type="number" th:field="*{stock}">冊
+        <span th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" style="color: red;"></span>
+
         <br>
-        <button type="submit" th:action="@{api/books}" method="get">APIで取得</button>
-        <button type="submit" >登録</button>
+        <button type="submit">登録</button>
+    </form>
+    <form th:action="@{/books/api}" method="get">
+        <input type="text" name="isbn" placeholder="ISBNを入力">
+        <button type="submit">APIで取得</button>
     </form>
 </body>
 

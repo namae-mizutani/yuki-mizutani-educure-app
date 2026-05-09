@@ -8,19 +8,20 @@
 </head>
 
 <body>
-    <form action="/purchase_history/{id}(id=${user.id})" method="post">
-        <h1>購入履歴</h1>
-        <p>購入履歴：</p>
-        <p>書籍名/購入数/注文日/配送ステータス</p>
-        <span th:each="book : ${books}">
-            <p th:text="${book.title}">/</p>
-            <p th:text="${book.orderCount}">冊/</p>
-            <p th:text="${book.createdAt}">/</p>
-            <p th:text="${book.status}">/</p>
-        </span>
-        <button type="button" th:formaction="@{/return-product}">返却</button>
-        <button type="submit" th:formaction="@{/cancel-order}">キャンセル</button>
-    </form>
+    <h1>購入履歴</h1>
+    <p>購入履歴：</p>
+    <p>書籍名/購入数/注文日/配送ステータス</p>
+    <div th:each="sales : ${books}">
+        <p>書籍名：<span th:text="${sales.title}"></span></p>
+        <p>購入数：<span th:text="${sales.quantity}"></span> 冊</p>
+        <p>注文日：<span th:text="${sales.createdAt}"></span></p>
+        <p>ステータス：<span th:text="${sales.status}"></span></p>
+
+        <form method="post">
+            <input type="hidden" name="id" th:value="${sales.orderId}">
+            <button type="submit" th:formaction="@{/return-product}">返却</button>
+        </form>
+    </div>
 </body>
 
 </html>

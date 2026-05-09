@@ -21,4 +21,8 @@ public interface BookService {
     void downloadCsv(PrintWriter writer);
 
     void uploadCsv(MultipartFile file) throws Exception;
+
+    List<Book> searchBooks(String title);
+
+    Book getBookInfoFromGoogle(String isbn);
 }

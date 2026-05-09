@@ -8,8 +8,8 @@
 </head>
 
 <body>
-    <p th:text="${message}"></p>
-    <form th:action="@{/top}" method="get">
+    <form th:action="@{/books/top}" method="get">
+        <p th:text="${message}"></p>
         <button type="submit">トップへ戻る</button>
     </form>
 </body>

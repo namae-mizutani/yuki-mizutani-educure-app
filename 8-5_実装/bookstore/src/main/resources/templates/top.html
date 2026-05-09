@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>書籍一覧</title>
+    <title>トップ画面</title>
 </head>
 
 <body>
@@ -13,18 +13,11 @@
     <form th:action="@{/books}" th:object="${bookForm}" method="get">
         <div>
             <label for="title">タイトル：</label>
-            <input type="text" th:field="*{title}">
-        </div>
-        <div style="display:flex;">
-            <label for="price">価格:</label>
-            <input type="number" id="price">
-            円 〜
-            <input type="number" id="price">
-            円
+            <input type="text" name="title" id="title">
         </div>
         <div>
             <button type="submit">検索</button>
-            <button type="button" onclick="location.href='/books'">クリア</button>
+            <button type="button" onclick="location.href='/books/top'">クリア</button>
         </div>
     </form>
 
@@ -36,7 +29,7 @@
                 <th>価格</th>
                 <th>カテゴリ</th>
                 <th>在庫数</th>
-                <th>購入</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -49,17 +42,25 @@
                 </td>
                 <td th:text="${book.stock}"></td>
                 <td>
-                <button th:action="@{/books/purchase?id=${book.id}}" type="submit">購入</button>
+                    <form th:if="${role == '会員'}" th:action="@{/books/purchase/{id}(id=${book.id})}">
+                        <button type="submit">購入</button>
+                    </form>
+
+                    <form th:if="${role == '在庫管理者'|| role == 'システム管理者'}" th:action="@{/books/edit/{id}(id=${book.id})}">
+                        <button type="submit">編集</button>
+                    </form>
                 </td>
-        </tr>
+            </tr>
         </tbody>
     </table>
-    <form th:action="@{/users/mypage/{id}(id=${session.loginId})}" method="get">
+    <p th:if="${books.size() == 0}">該当する本は見つかりませんでした。</p>
+    <form th:action="@{/users/mypage}" method="get">
         <button type="submit">マイページへ</button>
     </form>
     <form th:action="@{/}" method="get">
         <button type="submit">ログアウト</button>
     </form>
+    <a th:href="@{/menu}">メニューへ</a>
 </body>
 
 </html>

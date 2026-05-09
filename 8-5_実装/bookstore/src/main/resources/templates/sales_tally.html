@@ -8,25 +8,27 @@
 </head>
 
 <body>
-    <form action="/tally" method="post">
+    <form th:action="@{/tally}" th:object="${salesForm}" method="post">
         <h1>売上集計</h1>
+
         <p>期間</p>
-        <input type="day" th:field="*{startDate}">
-        円 〜
-        <input type="day" th:field="*{endDate}">
-        円
+        <input type="date" th:field="*{startDate}"> 〜 <input type="date" th:field="*{endDate}">
         <button type="submit">検索</button>
+        <p th:if="${message}" th:text="${message}" style="color: red;"></p>
 
-        <p>書籍名/売れた数/売上金額</p>
-        <span th:each="book : ${salesList}">
-            <a th:href="@{book/{id}(id=${book.orderId})}" th:text="${book.name}">/</a>
-            <a th:href="@{book/{id}(id=${book.orderId})}" th:text="${book.salesAmount}">冊</a>
-            <a th:herf="@{book/{id}(id=${book.orderId})}" th:text="${book.totalSales}">円</a>
-        </span>
-        <button type="button" onclick="location.href='/api/books/download'">CSV出力</button>
-        <button type="button" onclick="location.href='/api/books/upload'">CSVダウンロード</button>
+        <p>書籍名 / 売れた数 / 売上金額</p>
+        <div th:each="book : ${salesList}">
+            <span th:text="${book.title}">書籍名</span> /
+            <span th:text="${book.salesAmount}">0</span>冊 /
+            <span th:text="${book.totalSales}">0</span>円
+        </div>
+
+        <div>
+            <button type="button" th:onclick="|location.href='@{/books/apidownload}'|">CSV出力</button>
+            <button type="submit" th:onclick="|location.href='@{/books/apiupload}'|">CSVアップロード</button>
+        </div>
+
         <a th:href="@{/menu}">戻る</a>
-
     </form>
 </body>
 

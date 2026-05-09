@@ -9,11 +9,11 @@
 
 <body>
     <h1>役職/名前/登録日</h1>
-    <span th:each="user : ${users}">
+    <div th:each="user : ${users}">
         <span th:text="${user.name}"></span> |
         <span th:text="${user.role}"></span> |
         <span th:text="${#temporals.format(user.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
-    </span>
+    </div>
     <br>
     <a th:href="@{/menu}">戻る</a>
 </body>

@@ -7,10 +7,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import jakarta.servlet.http.HttpSession;
-
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import jp.mizutani.bookstore.form.LoginForm;
-import jp.mizutani.bookstore.form.UserForm;
 import jp.mizutani.bookstore.repository.UserMapper;
 import lombok.RequiredArgsConstructor;
 import jp.mizutani.bookstore.entity.User;
@@ -39,7 +38,7 @@ public class LoginController {
             return "login";
         }
         session.setAttribute("role", user.getRole());
-        session.setAttribute("loginId", user.getId());
+        session.setAttribute("loginUser", user);
         return "redirect:/menu";
     }
 
@@ -52,15 +51,16 @@ public class LoginController {
 
     @GetMapping("password_reset")
     public String getPasswordReset() {
+
         return "password_reset";
     }
 
     @PostMapping("/password_reset_execute")
-    public String userDeleteLogin(@ModelAttribute UserForm form) {
-        User user = userMapper.selectByName(form.getName());
+    public String userDeleteLogin(@RequestParam String name) {
+        User user = userMapper.selectByName(name);
 
         if (user != null) {
-            userMapper.delete(user);
+            userMapper.delete(user.getId());
             return "password_reset_completed";
         }
 

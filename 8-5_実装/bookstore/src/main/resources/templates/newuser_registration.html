@@ -12,9 +12,11 @@
         <h1>新規登録</h1>
         <label for="name">名前</label>
         <input type="text" id="name" th:field="*{name}">
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></span>
         <br>
         <label for="password">パスワード</label>
         <input type="password" id="password" th:field="*{password}">
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></span>
         <br>
         <label for="role">役職</label>
         <select name="select4" id="p4" required th:field="*{role}">
@@ -25,7 +27,7 @@
         </select>
         <br>
         <p th:if="${message}" th:text="${message}" style="color: blue;"></p>
-        <button type="submit" >登録</button>
+        <button type="submit">登録</button>
         <a th:href="@{/}">戻る</a>
     </form>
 </body>

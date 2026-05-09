@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.mizutani.bookstore.repository.SalesMapper">
-<select id="findAllOrders" resultType="jp.mizutani.bookstore.form.SalesForm">
-    SELECT 
-        s.id AS orderId,
-        s.book_id AS bookId,
-        b.title AS title,
-        s.quantity AS orderCount,
-        s.status AS status,
-        s.created_at AS createdAt
-    FROM sales s
-    JOIN books b ON s.book_id = b.id
-    ORDER BY s.created_at DESC
-</select>
+    <select id="findAllOrders" resultType="jp.mizutani.bookstore.form.SalesForm">
+        SELECT s.id AS orderId,s.book_id AS bookId,b.title AS title,s.quantity AS quantity,s.status AS status,s.created_at AS createdAt
+        FROM sales s
+        JOIN books b ON s.book_id = b.id
+        ORDER BY s.created_at DESC
+    </select>
+
+    <select id="selectByUserId" resultType="jp.mizutani.bookstore.entity.Sales">
+        SELECT s.id AS orderId,s.book_id AS bookId,b.title AS title,
+        s.quantity AS quantity,s.status AS status,s.created_at AS createdAt,
+        b.title AS title
+        FROM sales s
+        JOIN books b ON s.book_id = b.id
+        WHERE s.user_id = #{id}
+        ORDER BY s.created_at DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sales (user_id, book_id, quantity,status, created_at)
+        VALUES (#{userId}, #{bookId}, #{quantity}, '未発送',CURRENT_TIMESTAMP)
+    </insert>
+
+    <update id="updateStatus">
+        UPDATE sales SET status = #{status} WHERE id = #{id}
+    </update>
+
+    <!-- 1件検索 -->
+    <select id="selectById" resultType="jp.mizutani.bookstore.entity.Sales">
+       SELECT id, user_id AS userId, book_id AS bookId, 
+       quantity, created_at as createdAt FROM sales WHERE id = #{id}
+    </select>
+
+     <update id="updateStatusToShipped">
+        UPDATE sales SET status = '発送済' WHERE id = #{orderId}
+    </update>
+
+   <select id="findAllGroupedByTitle" resultType="jp.mizutani.bookstore.entity.Sales">
+        SELECT 
+            b.title AS title, 
+            SUM(s.quantity) AS salesAmount, 
+            SUM(s.quantity * CAST(b.price AS INTEGER)) AS totalSales
+        FROM sales s 
+        JOIN books b ON s.book_id = b.id
+        /* ここを ::DATE に変更 */
+        WHERE s.created_at::DATE BETWEEN #{startDate}::DATE AND #{endDate}::DATE
+        GROUP BY b.title
+    </select>
+
     <!-- 全件検索 -->
     <select id="selectAll" resultType="jp.mizutani.bookstore.entity.Sales">
         SELECT id, user_id AS userId, book_id AS bookId, quantity, stock, created_at as createdAt
     </select>
-    <!-- 1件検索 -->
-    <select id="selectById" resultType="jp.mizutani.bookstore.entity.Sales">
-       SELECT id, user_id AS userId, book_id AS bookId, 
-       quantity, stock, created_at as createdAt FROM sales WHERE id = #{id}
-    </select>
-    <!-- 登録 -->
-    <insert id="insert">
-        INSERT INTO sales (user_id, book_id, quantity, stock,status, created_at)
-        VALUES (#{userId}, #{bookId}, #{quantity}, #{stock}, '未発送',CURRENT_TIMESTAMP)
-    </insert>
-
-    <update id="updateStatusToShipped">
-        UPDATE sales SET status = '発送済' WHERE id = #{orderId}
-    </update>
-
-    <select id="findAllGroupedByTitle" resultType="jp.mizutani.bookstore.entity.Sales">
-        SELECT 
-            b.name AS name, 
-            SUM(s.quantity) AS salesAmount, 
-            SUM(s.quantity * b.price) AS totalSales
-        FROM sales s
-        JOIN books b ON s.book_id = b.id
-        GROUP BY b.name
-    </select>
-
-    <update id="updateStock">
-        UPDATE books  SET stock = stock + #{quantity} WHERE id = #{bookId}
-    </update>
-
-    <update id="updateStatus">
-        UPDATE sales SET status = #{status} WHERE id = #{orderId}
-    </update>
 
 </mapper>

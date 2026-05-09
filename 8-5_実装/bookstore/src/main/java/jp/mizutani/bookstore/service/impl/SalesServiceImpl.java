@@ -30,7 +30,17 @@ public class SalesServiceImpl implements SalesService {
     }
 
     @Override
-    public List<Sales> findAllGroupedByTitle() {
-        return salesMapper.findAllGroupedByTitle();
+    public List<Sales> findAllGroupedByTitle(String startDate, String endDate) {
+        return salesMapper.findAllGroupedByTitle(startDate, endDate);
+    }
+
+    @Override
+    public List<Sales> selectByUserId(int userId) {
+        return salesMapper.selectByUserId(userId);
+    }
+
+    @Override
+    public void updateStatus(int id, String status) {
+        salesMapper.updateStatus(status, id);
     }
 }

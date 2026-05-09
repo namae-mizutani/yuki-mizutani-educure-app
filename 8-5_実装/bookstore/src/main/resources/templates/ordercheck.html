@@ -13,11 +13,12 @@
         <p>書籍名/購入数/注文日/配送ステータス</p>
         <span th:each="book : ${books}">
             <p th:text="${book.title}">/</p>
-            <p th:text="${book.orderCount}">冊/</p>
+            <p th:text="${book.quantity}">冊/</p>
             <p th:text="${book.createdAt}">/</p>
             <p th:text="${book.status}">/</p>
+            <input type="hidden" th:name="id" th:value="${book.orderId}">
+            <button type="submit">発送する</button>
         </span>
-        <button type="submit">発送する</button>
         <a th:href="@{/menu}">戻る</a>
     </form>
 </body>

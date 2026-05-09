@@ -12,4 +12,6 @@ public interface StockService {
     void insert(Stock stock);
 
     void update(Stock stock);
+
+    void delete(int id);
 }

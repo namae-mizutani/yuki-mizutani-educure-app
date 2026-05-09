@@ -15,11 +15,16 @@ public interface SalesMapper {
 
     void insert(Sales sales);
 
-    void updateStatus(int orderId);
 
     List<SalesForm> findAllOrders();
 
-    List<Sales> findAllGroupedByTitle();
+    List<Sales> findAllGroupedByTitle( @Param("startDate") String startDate, @Param("endDate") String endDate);
 
-    void updateStatus(@Param("orderId") int orderId, @Param("status") String status);
+    void updateStatus(@Param("status") String status,@Param("id") int id);
+
+ 
+    List<Sales> selectByUserId(int id); 
+
+    void updateStatus(int id, String status);
+
 }

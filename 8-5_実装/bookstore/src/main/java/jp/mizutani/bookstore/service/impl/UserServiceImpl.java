@@ -4,7 +4,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
+import jp.mizutani.bookstore.entity.Sales;
 import jp.mizutani.bookstore.entity.User;
+import jp.mizutani.bookstore.repository.SalesMapper;
 import jp.mizutani.bookstore.repository.UserMapper;
 import jp.mizutani.bookstore.service.UserService;
 
@@ -13,6 +15,7 @@ import jp.mizutani.bookstore.service.UserService;
 @Transactional
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
+    private final SalesMapper salesMapper;
 
     @Override
     public List<User> selectAll() {
@@ -20,13 +23,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectById(int id) {
-        return userMapper.selectById(id);
+    public List<Sales> getPurchaseHistory(int id) {
+        return salesMapper.selectByUserId(id);
     }
 
     @Override
     public User login(String user_name, String password) {
-        return null; 
+        return null;
     }
 
     @Override
@@ -42,5 +45,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User user) {
         userMapper.update(user);
+    }
+
+    @Override
+    public User selectById(int id) {
+        return userMapper.selectById(id);
+    }
+
+    @Override
+    public boolean findByName(String name) {
+        return userMapper.findByName(name);
     }
 }
