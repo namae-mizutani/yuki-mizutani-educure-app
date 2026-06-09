@@ -17,14 +17,17 @@ import jp.mizutani.bookstore.form.UserForm;
 import jp.mizutani.bookstore.repository.UserMapper;
 import jp.mizutani.bookstore.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
+    private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     @Autowired
     private UserMapper userMapper;
+    
 
     @GetMapping("/newuser_registration")
     public String displayRegistrationForm(Model model) {
@@ -43,7 +46,8 @@ public class UserController {
         }
         User user = new User();
         user.setName(form.getName());
-        user.setPassword(form.getPassword());
+        // user.setPassword(form.getPassword());
+        user.setPassword(passwordEncoder.encode(form.getPassword()));
         user.setRole(form.getRole());
         userService.insert(user);
         model.addAttribute("message", " 登録しました");
@@ -87,7 +91,8 @@ public class UserController {
                 return "mypage";
             }
             user.setName(form.getName());
-            user.setPassword(form.getPassword());
+            // user.setPassword(form.getPassword());
+            user.setPassword(passwordEncoder.encode(form.getPassword()));
             userMapper.update(user);
             model.addAttribute("user", user);
             model.addAttribute("message", "変更しました。");

@@ -60,23 +60,85 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    // @Override
+    // public void uploadCsv(MultipartFile file) throws Exception {
+    //     try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"))) {
+    //         String line;
+    //         br.readLine();
+    //         while ((line = br.readLine()) != null) {
+    //             String[] data = line.split(",");
+
+    //             Book book = new Book();
+    //             book.setTitle(data[1]);
+    //             book.setPrice(Integer.parseInt(data[2]));
+    //             book.setCategory(data[3]);
+
+    //             bookMapper.insert(book);
+    //         }
+    //     }
+    // }
     @Override
-    public void uploadCsv(MultipartFile file) throws Exception {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"))) {
-            String line;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                String[] data = line.split(",");
+public void uploadCsv(MultipartFile file) throws Exception {
 
-                Book book = new Book();
-                book.setTitle(data[1]);
-                book.setPrice(Integer.parseInt(data[2]));
-                book.setCategory(data[3]);
+// ① ファイルが空でないかチェック
+if (file.isEmpty()) {
+    throw new Exception("ファイルが空です");
+}
 
-                bookMapper.insert(book);
-            }
+// ② 文字コードを自動判定（UTF-8 → Shift-JIS の順で試みる）
+String charset = "UTF-8";
+byte[] bytes = file.getBytes();
+// Shift-JIS特有のバイト列が含まれているか簡易チェック
+try {
+    new String(bytes, "UTF-8").getBytes("UTF-8");
+} catch (Exception e) {
+    charset = "Shift-JIS";
+}
+
+try (BufferedReader br = new BufferedReader(
+        new InputStreamReader(new java.io.ByteArrayInputStream(bytes), charset))) {
+
+    String line;
+    int lineNumber = 0;
+    br.readLine(); // ヘッダー行をスキップ
+    lineNumber++;
+
+    while ((line = br.readLine()) != null) {
+        lineNumber++;
+
+        // ③ 空行をスキップ
+        if (line.trim().isEmpty()) {
+            continue;
         }
+
+        String[] data = line.split(",");
+
+        // ④ 列数チェック（最低4列必要）
+        if (data.length < 4) {
+            throw new Exception(lineNumber + "行目: 列数が不足しています（" + data.length + "列）");
+        }
+
+        // ⑤ 価格が数字かチェック
+        int price;
+        try {
+            price = Integer.parseInt(data[2].trim());
+        } catch (NumberFormatException e) {
+            throw new Exception(lineNumber + "行目: 価格に数字以外の値が入っています→「" + data[2] + "」");
+        }
+
+        // ⑥ 価格が負の値でないかチェック
+        if (price < 0) {
+            throw new Exception(lineNumber + "行目: 価格に負の値は設定できません→「" + price + "」");
+        }
+
+        Book book = new Book();
+        book.setTitle(data[1].trim());
+        book.setPrice(price);
+        book.setCategory(data[3].trim());
+        bookMapper.insert(book);
     }
+ }
+}
 
     @Override
     public List<Book> searchBooks(String title) {

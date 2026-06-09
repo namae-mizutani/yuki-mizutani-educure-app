@@ -13,10 +13,15 @@ import jp.mizutani.bookstore.form.LoginForm;
 import jp.mizutani.bookstore.repository.UserMapper;
 import lombok.RequiredArgsConstructor;
 import jp.mizutani.bookstore.entity.User;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
+    private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
     @GetMapping("/")
@@ -32,13 +37,19 @@ public class LoginController {
             return "login";
         }
         User user = userMapper.selectByName(form.getName());
+        if (user == null || !passwordEncoder.matches(form.getPassword(), user.getPassword())) {
 
-        if (user == null || !user.getPassword().equals(form.getPassword())) {
             model.addAttribute("message", "名前またはパスワードが違います");
             return "login";
         }
         session.setAttribute("role", user.getRole());
         session.setAttribute("loginUser", user);
+        var auth = new UsernamePasswordAuthenticationToken(
+                user.getName(),
+                null,
+                AuthorityUtils.createAuthorityList("ROLE_" + user.getRole()));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
         return "redirect:/menu";
     }
 
@@ -60,15 +71,11 @@ public class LoginController {
         User user = userMapper.selectByName(name);
 
         if (user != null) {
-            userMapper.delete(user.getId());
+            user.setPassword(passwordEncoder.encode("Pass1234"));
+            userMapper.update(user);
             return "password_reset_completed";
         }
 
         return "password_reset";
-    }
-
-    @GetMapping("/logout")
-    public String logout() {
-        return "redirect:/";
     }
 }
