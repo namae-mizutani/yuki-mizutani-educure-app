@@ -24,6 +24,11 @@ public class LoginController {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
+    // @GetMapping("/login")
+    // public String login(Model model) {
+    //     model.addAttribute("loginForm", new LoginForm());
+    //     return "login";
+    // }
     @GetMapping("/")
     public String login(Model model) {
         model.addAttribute("loginForm", new LoginForm());
