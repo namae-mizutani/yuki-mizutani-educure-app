@@ -23,19 +23,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class LoginController {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
-
+    // トップページとログインページは同じ画面を表示するようにしています！どちらからアクセスしてもログイン画面が出るイメージです。
     @GetMapping("/")
     public String login(Model model) {
         model.addAttribute("loginForm", new LoginForm());
         return "login";
     }
-
+    // ログイン処理 (トップページとログインページの両方からアクセスできるようにするため、URLは/loginにしています！)
     @GetMapping("/login")
     public String loginPage(Model model) {
         model.addAttribute("loginForm", new LoginForm());
         return "login";
     }
-
+    // ログイン処理 
     @PostMapping("/login")
     public String login(@Validated @ModelAttribute LoginForm form,
             BindingResult result, Model model, HttpSession session) {
@@ -73,13 +73,32 @@ public class LoginController {
     }
 
     @PostMapping("/password_reset_execute")
-    public String userDeleteLogin(@RequestParam String name) {
+    public String userDeleteLogin(@RequestParam String name, Model model) {
         User user = userMapper.selectByName(name);
 
         if (user != null) {
-            user.setPassword(passwordEncoder.encode("Pass1234"));
-            userMapper.update(user);
+            model.addAttribute("userName", name); // リセット後に画面にユーザー名を渡す
             return "password_reset_completed";
+        }
+
+        return "password_reset";
+    }
+    // パスワードリセット後の新しいパスワードを保存するためのメソッド
+    @PostMapping("/password_reset_update")
+    public String passwordResetUpdate(@RequestParam String name,
+            @RequestParam String password, Model model) {
+
+        if (password == null || password.isEmpty()) {
+            model.addAttribute("message", "パスワードを入力してください");
+            model.addAttribute("userName", name);
+            return "password_reset_completed";
+        }
+
+        User user = userMapper.selectByName(name);
+        if (user != null) {
+            user.setPassword(passwordEncoder.encode(password));
+            userMapper.update(user);
+            return "redirect:/";
         }
 
         return "password_reset";
