@@ -72,18 +72,6 @@ public class LoginController {
         return "password_reset";
     }
 
-    // @PostMapping("/password_reset_execute")
-    // public String userDeleteLogin(@RequestParam String name) {
-    //     User user = userMapper.selectByName(name);
-
-    //     if (user != null) {
-    //         user.setPassword(passwordEncoder.encode("Pass1234"));
-    //         userMapper.update(user);
-    //         return "password_reset_completed";
-    //     }
-
-    //     return "password_reset";
-    // }
      @PostMapping("/password_reset_execute")
       public String passwordResetExecute(@RequestParam String name,
             HttpSession session, Model model) {
