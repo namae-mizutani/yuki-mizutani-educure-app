@@ -30,6 +30,12 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/login")
+    public String loginPage(Model model) {
+        model.addAttribute("loginForm", new LoginForm());
+        return "login";
+    }
+
     @PostMapping("/login")
     public String login(@Validated @ModelAttribute LoginForm form,
             BindingResult result, Model model, HttpSession session) {
