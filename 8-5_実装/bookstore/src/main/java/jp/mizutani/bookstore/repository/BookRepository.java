@@ -1,9 +1,9 @@
-package jp.mizutani.bookstore.repository;
+// package jp.mizutani.bookstore.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+// import org.springframework.data.jpa.repository.JpaRepository;
 
-import jp.mizutani.bookstore.entity.Book;
+// import jp.mizutani.bookstore.entity.Book;
 
-public interface BookRepository extends JpaRepository<Book, Integer>{
+// public interface BookRepository extends JpaRepository<Book, Integer>{
 
-} 
+// } 

@@ -141,7 +141,6 @@ public class BookController {
     public String update(@RequestParam("id") int id,
             @RequestParam("price") int price, @RequestParam("stock") int stockCount,
             Model model, String title) {
-                
 
         Book book = bookService.selectById(id);
         book.setPrice(price);
@@ -203,9 +202,9 @@ public class BookController {
     @GetMapping("/api")
     public String getBook(@RequestParam("isbn") String isbn, Model model) {
         Book googleBook = bookService.getBookInfoFromGoogle(isbn);
-       
+
         BookForm form = new BookForm();
-        form.setTitle(googleBook.getTitle()); 
+        form.setTitle(googleBook.getTitle());
         form.setPrice(googleBook.getPrice());
         form.setCategory(googleBook.getCategory());
         form.setStock(googleBook.getStock());

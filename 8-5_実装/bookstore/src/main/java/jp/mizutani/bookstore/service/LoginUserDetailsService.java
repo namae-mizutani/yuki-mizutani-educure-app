@@ -18,7 +18,7 @@ import jp.mizutani.bookstore.repository.UserMapper;
 public class LoginUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserMapper userMapper; // 👈 水谷さんのMapperを使ってデータベースに接続！
+    private UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
