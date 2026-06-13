@@ -24,13 +24,14 @@ public class LoginController {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
-    // @GetMapping("/login")
-    // public String login(Model model) {
-    //     model.addAttribute("loginForm", new LoginForm());
-    //     return "login";
-    // }
+ 
     @GetMapping("/")
     public String login(Model model) {
+        model.addAttribute("loginForm", new LoginForm());
+        return "login";
+    }
+     @GetMapping("/login")
+    public String loginPage(Model model) {
         model.addAttribute("loginForm", new LoginForm());
         return "login";
     }
@@ -71,14 +72,66 @@ public class LoginController {
         return "password_reset";
     }
 
-    @PostMapping("/password_reset_execute")
-    public String userDeleteLogin(@RequestParam String name) {
+    // @PostMapping("/password_reset_execute")
+    // public String userDeleteLogin(@RequestParam String name) {
+    //     User user = userMapper.selectByName(name);
+
+    //     if (user != null) {
+    //         user.setPassword(passwordEncoder.encode("Pass1234"));
+    //         userMapper.update(user);
+    //         return "password_reset_completed";
+    //     }
+
+    //     return "password_reset";
+    // }
+     @PostMapping("/password_reset_execute")
+      public String passwordResetExecute(@RequestParam String name,
+            HttpSession session, Model model) {
+        User user = userMapper.selectByName(name);
+        if (user != null) {
+            session.setAttribute("resetUserName", name); // セッションに保存
+            return "password_reset_confirm"; // 本人確認画面へ
+        }
+        model.addAttribute("message", "登録されていない名前です");
+        return "password_reset";
+    }
+
+    @PostMapping("/password_reset_confirm")
+    public String passwordResetConfirm(@RequestParam String role,
+            HttpSession session, Model model) {
+        String name = (String) session.getAttribute("resetUserName");
+        if (name == null) {
+            return "redirect:/password_reset";
+        }
         User user = userMapper.selectByName(name);
 
-        if (user != null) {
-            user.setPassword(passwordEncoder.encode("Pass1234"));
-            userMapper.update(user);
+        System.out.println("DBから取得した役職: [" + user.getRole() + "]");
+System.out.println("画面から送られた役職: [" + role + "]");
+        if (user != null && user.getRole().equals(role)) {
+            return "password_reset_completed"; // 新パスワード入力画面へ
+        }
+        model.addAttribute("message", "役職が一致しません");
+        return "password_reset_confirm";
+    }
+    // パスワードリセット後の新しいパスワードを保存するためのメソッド
+    @PostMapping("/password_reset_update")
+    public String passwordResetUpdate(@RequestParam String password,
+            HttpSession session, Model model) {
+
+        String name = (String) session.getAttribute("resetUserName");
+        if (name == null) {
+            return "redirect:/password_reset";
+        }
+        if (password == null || password.isEmpty()) {
+            model.addAttribute("message", "パスワードを入力してください");
             return "password_reset_completed";
+        }
+        User user = userMapper.selectByName(name);
+        if (user != null) {
+             user.setPassword(passwordEncoder.encode(password));
+            userMapper.update(user);
+               session.removeAttribute("resetUserName");
+            return "redirect:/";
         }
 
         return "password_reset";
