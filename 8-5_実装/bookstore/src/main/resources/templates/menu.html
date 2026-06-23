@@ -19,6 +19,10 @@
             <li><a th:href="@{/ordercheck}">注文確認</a></li>
         </th:block>
     </ul>
+    <!-- ↓ これを追加 -->
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">ログアウト</button>
+    </form>
 </body>
 
 </html>

@@ -203,13 +203,19 @@ public class BookController {
     public String getBook(@RequestParam("isbn") String isbn, Model model) {
         Book googleBook = bookService.getBookInfoFromGoogle(isbn);
 
+        // ① nullチェック
+        if (googleBook == null) {
+            model.addAttribute("errorMessage", "書籍情報が取得できませんでした。ISBNを確認するか、手動で入力してください。");
+            model.addAttribute("bookForm", new BookForm());
+            return "newbook_registration";
+        }
+
         BookForm form = new BookForm();
         form.setTitle(googleBook.getTitle());
         form.setPrice(googleBook.getPrice());
         form.setCategory(googleBook.getCategory());
         form.setStock(googleBook.getStock());
         model.addAttribute("bookForm", form);
-
         return "newbook_registration";
     }
 

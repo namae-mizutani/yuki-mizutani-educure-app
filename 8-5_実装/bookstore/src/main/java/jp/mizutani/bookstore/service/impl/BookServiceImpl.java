@@ -2,6 +2,8 @@ package jp.mizutani.bookstore.service.impl;
 
 import java.io.PrintWriter;
 import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -122,23 +124,52 @@ try (BufferedReader br = new BufferedReader(
         return bookMapper.searchBooks(title);
     }
 
-    @Override
     public Book getBookInfoFromGoogle(String isbn) {
-        String apiKey = "AlzaSyD6EVARo5T0Fxxvatve-DKYCq-85uQuU0M";
         String url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
-
         RestTemplate restTemplate = new RestTemplate();
-        String jsonResponse = restTemplate.getForObject(url, String.class);
+
+        // HTTPステータスコードを確認するためResponseEntityで受け取る
+        ResponseEntity<String> response;
+        try {
+            response = restTemplate.getForEntity(url, String.class);
+        } catch (Exception e) {
+            System.out.println("API通信エラー: " + e.getMessage());
+            return null;
+        }
+
+        // 200以外はエラー
+        if (response.getStatusCode().value() != 200) {
+            System.out.println("APIエラー: HTTPステータス " + response.getStatusCode().value());
+            return null;
+        }
+
         Book book = new Book();
         try {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode root = mapper.readTree(jsonResponse);
-            String title = root.path("items").get(0).path("volumeInfo").path("title").asText();
-            book.setTitle(title);
-            book.setCategory(root.path("items").get(0).path("volumeInfo").path("categories").get(0).asText());
-            book.setPrice(root.path("items").get(0).path("saleInfo").path("listPrice").path("amount").asInt());
+            JsonNode root = mapper.readTree(response.getBody());
+
+            // itemsが存在するか確認
+            JsonNode items = root.path("items");
+            if (items.isMissingNode() || items.isEmpty()) {
+                System.out.println("書籍情報が見つかりませんでした: isbn=" + isbn);
+                return null;
+            }
+
+            JsonNode volumeInfo = items.get(0).path("volumeInfo");
+            JsonNode saleInfo = items.get(0).path("saleInfo");
+
+            // 各フィールドが存在するか確認してから取得
+            book.setTitle(volumeInfo.path("title").asText("タイトル不明"));
+
+            JsonNode categories = volumeInfo.path("categories");
+            book.setCategory(categories.isEmpty() ? "未分類" : categories.get(0).asText());
+
+            JsonNode listPrice = saleInfo.path("listPrice").path("amount");
+            book.setPrice(listPrice.isMissingNode() ? 0 : listPrice.asInt());
+
         } catch (Exception e) {
             System.out.println("データ解析エラー: " + e.getMessage());
+            return null;
         }
         return book;
     }
