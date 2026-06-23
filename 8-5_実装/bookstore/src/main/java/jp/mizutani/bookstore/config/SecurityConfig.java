@@ -24,7 +24,9 @@ public class SecurityConfig {
                                 "/users/registration",
                                 "/password_reset",
                                 "/password_reset_execute",
+                                "/password_reset_confirm",
                                 "/password_reset_completed",
+                                "/password_reset_update",
                                 "/css/**",
                                 "/js/**")
                         .permitAll()
