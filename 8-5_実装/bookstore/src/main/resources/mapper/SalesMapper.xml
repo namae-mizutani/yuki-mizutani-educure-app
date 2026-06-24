@@ -44,7 +44,6 @@
             SUM(s.quantity * CAST(b.price AS INTEGER)) AS totalSales
         FROM sales s 
         JOIN books b ON s.book_id = b.id
-        /* ここを ::DATE に変更 */
         WHERE s.created_at::DATE BETWEEN #{startDate}::DATE AND #{endDate}::DATE
         GROUP BY b.title
     </select>

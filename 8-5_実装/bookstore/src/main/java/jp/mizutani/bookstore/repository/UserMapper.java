@@ -12,7 +12,6 @@ public interface UserMapper {
     User selectById(@Param("id") int id);
 
     User selectByName(String name);
-    
 
     void insert(User user);
 

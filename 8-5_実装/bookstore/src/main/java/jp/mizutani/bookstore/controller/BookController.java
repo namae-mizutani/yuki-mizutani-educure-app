@@ -1,6 +1,7 @@
 package jp.mizutani.bookstore.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -187,9 +188,11 @@ public class BookController {
         response.setContentType("text/csv; charset=UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=books.csv");
 
-        response.getWriter().write('\ufeff');
-
-        bookService.downloadCsv(response.getWriter());
+        response.setCharacterEncoding("UTF-8"); // 明示的にエンコーディングを指定
+        PrintWriter writer = response.getWriter();
+        writer.write('\ufeff');
+        bookService.downloadCsv(writer);
+        writer.flush();
     }
 
     @PostMapping("apiupload")
@@ -203,13 +206,18 @@ public class BookController {
     public String getBook(@RequestParam("isbn") String isbn, Model model) {
         Book googleBook = bookService.getBookInfoFromGoogle(isbn);
 
+        if (googleBook == null) {
+            model.addAttribute("errorMessage", "書籍情報が取得できませんでした。ISBNを確認するか、手動で入力してください。");
+            model.addAttribute("bookForm", new BookForm());
+            return "newbook_registration";
+        }
+
         BookForm form = new BookForm();
         form.setTitle(googleBook.getTitle());
         form.setPrice(googleBook.getPrice());
         form.setCategory(googleBook.getCategory());
         form.setStock(googleBook.getStock());
         model.addAttribute("bookForm", form);
-
         return "newbook_registration";
     }
 

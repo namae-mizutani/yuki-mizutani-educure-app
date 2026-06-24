@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
     <form action="/books/registration" th:object="${bookForm}" method="post">
         <h1>商品新規登録</h1>
 
@@ -36,6 +37,7 @@
         <input type="text" name="isbn" placeholder="ISBNを入力">
         <button type="submit">APIで取得</button>
     </form>
+    <a th:href="@{/menu}">メニューに戻る</a>
 </body>
 
 </html>
