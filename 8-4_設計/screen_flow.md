@@ -28,7 +28,7 @@ graph TD
     R --> S[商品編集完了画面]
 
     D --> A
-    F --> A
+    B --> A
     R --> F
     I --> B
     H --> B
