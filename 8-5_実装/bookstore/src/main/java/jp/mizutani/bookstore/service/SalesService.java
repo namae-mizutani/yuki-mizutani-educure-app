@@ -15,5 +15,4 @@ public interface SalesService {
     List<Sales> selectByUserId(int userId);
 
     void updateStatus(int id, String status);
-
 }
