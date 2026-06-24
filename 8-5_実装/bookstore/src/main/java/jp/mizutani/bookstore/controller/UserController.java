@@ -27,7 +27,6 @@ public class UserController {
     private final UserService userService;
     @Autowired
     private UserMapper userMapper;
-    
 
     @GetMapping("/newuser_registration")
     public String displayRegistrationForm(Model model) {
@@ -91,7 +90,6 @@ public class UserController {
                 return "mypage";
             }
             user.setName(form.getName());
-            // user.setPassword(form.getPassword());
             user.setPassword(passwordEncoder.encode(form.getPassword()));
             userMapper.update(user);
             model.addAttribute("user", user);

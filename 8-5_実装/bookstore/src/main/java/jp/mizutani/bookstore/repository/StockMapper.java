@@ -20,8 +20,5 @@ public interface StockMapper {
 
     void updateStock(@Param("bookId") int bookId, @Param("count") int count);
 
-    void updateStockForReturn(@Param("bookId") int bookId, @Param("quantity") int quantity);     
-    
-    
-
+    void updateStockForReturn(@Param("bookId") int bookId, @Param("quantity") int quantity);
 }

@@ -62,62 +62,61 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-
     @Override
-public void uploadCsv(MultipartFile file) throws Exception {
+    public void uploadCsv(MultipartFile file) throws Exception {
 
-if (file.isEmpty()) {
-    throw new Exception("ファイルが空です");
-}
-
-String charset = "UTF-8";
-byte[] bytes = file.getBytes();
-try {
-    new String(bytes, "UTF-8").getBytes("UTF-8");
-} catch (Exception e) {
-    charset = "Shift-JIS";
-}
-
-try (BufferedReader br = new BufferedReader(
-        new InputStreamReader(new java.io.ByteArrayInputStream(bytes), charset))) {
-
-    String line;
-    int lineNumber = 0;
-    br.readLine();
-    lineNumber++;
-
-    while ((line = br.readLine()) != null) {
-        lineNumber++;
-
-        if (line.trim().isEmpty()) {
-            continue;
+        if (file.isEmpty()) {
+            throw new Exception("ファイルが空です");
         }
 
-        String[] data = line.split(",");
-
-        if (data.length < 4) {
-            throw new Exception(lineNumber + "行目: 列数が不足しています（" + data.length + "列）");
-        }
-
-        int price;
+        String charset = "UTF-8";
+        byte[] bytes = file.getBytes();
         try {
-            price = Integer.parseInt(data[2].trim());
-        } catch (NumberFormatException e) {
-            throw new Exception(lineNumber + "行目: 価格に数字以外の値が入っています→「" + data[2] + "」");
+            new String(bytes, "UTF-8").getBytes("UTF-8");
+        } catch (Exception e) {
+            charset = "Shift-JIS";
         }
 
-        if (price < 0) {
-            throw new Exception(lineNumber + "行目: 価格に負の値は設定できません→「" + price + "」");
-        }
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(new java.io.ByteArrayInputStream(bytes), charset))) {
 
-        Book book = new Book();
-        book.setTitle(data[1].trim());
-        book.setPrice(price);
-        book.setCategory(data[3].trim());
-        bookMapper.insert(book);
+            String line;
+            int lineNumber = 0;
+            br.readLine();
+            lineNumber++;
+
+            while ((line = br.readLine()) != null) {
+                lineNumber++;
+
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
+                String[] data = line.split(",");
+
+                if (data.length < 4) {
+                    throw new Exception(lineNumber + "行目: 列数が不足しています（" + data.length + "列）");
+                }
+
+                int price;
+                try {
+                    price = Integer.parseInt(data[2].trim());
+                } catch (NumberFormatException e) {
+                    throw new Exception(lineNumber + "行目: 価格に数字以外の値が入っています→「" + data[2] + "」");
+                }
+
+                if (price < 0) {
+                    throw new Exception(lineNumber + "行目: 価格に負の値は設定できません→「" + price + "」");
+                }
+
+                Book book = new Book();
+                book.setTitle(data[1].trim());
+                book.setPrice(price);
+                book.setCategory(data[3].trim());
+                bookMapper.insert(book);
+            }
+        }
     }
- }
-}
 
     @Override
     public List<Book> searchBooks(String title) {
@@ -128,7 +127,6 @@ try (BufferedReader br = new BufferedReader(
         String url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
         RestTemplate restTemplate = new RestTemplate();
 
-        // HTTPステータスコードを確認するためResponseEntityで受け取る
         ResponseEntity<String> response;
         try {
             response = restTemplate.getForEntity(url, String.class);
@@ -137,18 +135,15 @@ try (BufferedReader br = new BufferedReader(
             return null;
         }
 
-        // 200以外はエラー
         if (response.getStatusCode().value() != 200) {
             System.out.println("APIエラー: HTTPステータス " + response.getStatusCode().value());
             return null;
         }
-
         Book book = new Book();
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(response.getBody());
 
-            // itemsが存在するか確認
             JsonNode items = root.path("items");
             if (items.isMissingNode() || items.isEmpty()) {
                 System.out.println("書籍情報が見つかりませんでした: isbn=" + isbn);
@@ -158,7 +153,6 @@ try (BufferedReader br = new BufferedReader(
             JsonNode volumeInfo = items.get(0).path("volumeInfo");
             JsonNode saleInfo = items.get(0).path("saleInfo");
 
-            // 各フィールドが存在するか確認してから取得
             book.setTitle(volumeInfo.path("title").asText("タイトル不明"));
 
             JsonNode categories = volumeInfo.path("categories");

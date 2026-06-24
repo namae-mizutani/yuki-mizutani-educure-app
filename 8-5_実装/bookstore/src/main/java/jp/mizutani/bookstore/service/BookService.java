@@ -2,9 +2,7 @@ package jp.mizutani.bookstore.service;
 
 import java.io.PrintWriter;
 import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
-
 import jp.mizutani.bookstore.entity.Book;
 
 public interface BookService {
