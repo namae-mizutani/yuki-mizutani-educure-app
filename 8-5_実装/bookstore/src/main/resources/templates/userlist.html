@@ -3,19 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ユーザー一覧</title>
+    <title>利用者一覧</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
-    <h1>役職/名前/登録日</h1>
+    <h1>利用者一覧</h1>
+    <h2>役職/名前/登録日</h2>
     <div th:each="user : ${users}">
-        <span th:text="${user.name}"></span> |
         <span th:text="${user.role}"></span> |
+        <span th:text="${user.name}"></span> |
         <span th:text="${#temporals.format(user.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
     </div>
     <br>
-    <a th:href="@{/menu}">戻る</a>
+    <a th:href="@{/menu}"><button type="button">戻る</button></a>
 </body>
 
 </html>

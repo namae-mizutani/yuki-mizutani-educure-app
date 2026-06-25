@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>商品新規登録</title>
+    <title>新規書籍登録</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
     <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
     <form action="/books/registration" th:object="${bookForm}" method="post">
-        <h1>商品新規登録</h1>
+        <h1>新規書籍登録</h1>
 
         <label for="title">書籍名</label>
         <input type="text" th:field="*{title}">
@@ -37,7 +37,7 @@
         <input type="text" name="isbn" placeholder="ISBNを入力">
         <button type="submit">APIで取得</button>
     </form>
-    <a th:href="@{/menu}">メニューに戻る</a>
+    <a th:href="@{/menu}"><button type="button">戻る</button></a>
 </body>
 
 </html>

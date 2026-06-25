@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import jp.mizutani.bookstore.entity.Sales;
 import jp.mizutani.bookstore.form.SalesForm;
 import jp.mizutani.bookstore.repository.SalesMapper;
@@ -64,18 +66,53 @@ public class SalesController {
     }
 
     @PostMapping("/return-product")
-    public String returnProduct(@RequestParam int id, Model model) {
+    public String returnProduct(@RequestParam int id, RedirectAttributes redirectAttributes) {
+        Sales sales = salesMapper.selectById(id);
+        if (sales == null) {
+            redirectAttributes.addFlashAttribute("message", "対象の注文が見つかりませんでした");
+            return "redirect:/users/purchasehistory";
+        }
+
+        if ("返却".equals(sales.getStatus())) {
+            redirectAttributes.addFlashAttribute("message", "すでに返却済みです");
+            return "redirect:/users/purchasehistory";
+        }
+
+        if ("発送済".equals(sales.getStatus())) {
+            redirectAttributes.addFlashAttribute("message", "発送済みのため返却できません");
+            return "redirect:/users/purchasehistory";
+        }
+
         salesMapper.updateStatus("返却", id);
-        model.addAttribute("message", "返却しました");
-        return "purchase_done";
+        redirectAttributes.addFlashAttribute("message", "返却しました");
+        return "redirect:/users/purchasehistory";
     }
 
     @PostMapping("/shipping")
     public String shipping(@RequestParam int id, Model model) {
+        return shipping(id, model, new RedirectAttributesModelMap());
+    }
+
+    public String shipping(@RequestParam int id, Model model, RedirectAttributes redirectAttributes) {
+        Sales sales = salesMapper.selectById(id);
+        if (sales == null) {
+            redirectAttributes.addFlashAttribute("message", "対象の注文が見つかりませんでした");
+            return "redirect:/ordercheck";
+        }
+
+        if ("返却".equals(sales.getStatus())) {
+            redirectAttributes.addFlashAttribute("message", "返却済みのため発送できません");
+            return "redirect:/ordercheck";
+        }
+
+        if ("発送済".equals(sales.getStatus())) {
+            redirectAttributes.addFlashAttribute("message", "すでに発送済みです");
+            return "redirect:/ordercheck";
+        }
 
         salesMapper.updateStatus("発送済", id);
-        model.addAttribute("message", "発送しました");
-        return "redirect:ordercheck";
+        redirectAttributes.addFlashAttribute("message", "発送しました");
+        return "redirect:/ordercheck";
     }
 
 }

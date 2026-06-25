@@ -28,7 +28,7 @@
         <br>
         <p th:if="${message}" th:text="${message}" style="color: blue;"></p>
         <button type="submit">登録</button>
-        <a th:href="@{/}">戻る</a>
+        <button type="button" th:onclick="|location.href='@{/login}'|">戻る</button>
     </form>
 </body>
 

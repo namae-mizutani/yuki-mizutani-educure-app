@@ -8,23 +8,43 @@
 </head>
 
 <body>
-    <form th:action="@{/users/update}" method="post" th:object="${user}">
-        <h1>マイページ</h1>
-        <input type="hidden" name="id" th:value="*{id}">
+    <h1>マイページ</h1>
+    <p>登録情報の変更や、購入履歴の確認・退会を行えます。</p>
 
-        <label for="name">名前：</label>
-        <input type="text" id="name" name="name" th:value="*{name}">
-        <br>
-        <label for="password">パスワード：</label>
-        <input type="password" id="password" name="password">
-        <br>
-        <button type="submit">変更</button>
+    <section>
+        <h2>会員情報の変更</h2>
+        <p>名前またはパスワードを変更する場合は、両方入力して「変更する」を押してください。</p>
+        <form th:action="@{/users/update}" method="post" th:object="${user}">
+            <input type="hidden" name="id" th:value="*{id}">
+
+            <label for="name">名前：</label>
+            <input type="text" id="name" name="name" th:value="*{name}">
+            <br>
+            <label for="password">パスワード：</label>
+            <input type="password" id="password" name="password">
+            <br>
+            <button type="submit">変更する</button>
+        </form>
         <p th:if="${message}" th:text="${message}"></p>
-        <button type="submit" th:formaction="@{/users/purchasehistory}" formmethod="get">購入履歴</button>
-        <button type="submit" th:formaction="@{/users/withdraw}" onclick="return confirm('退会してもよろしいですか？')"
-            method="post">退会</button>
-    </form>
-    <a th:href="@{/books/top}">戻る</a>
+    </section>
+
+    <section>
+        <h2>購入履歴</h2>
+        <p>過去の注文内容の確認や、書籍の返却ができます。</p>
+        <form th:action="@{/users/purchasehistory}" method="get">
+            <button type="submit">購入履歴を見る</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>退会</h2>
+        <p>アカウントを削除してサービスから退会します。</p>
+        <form th:action="@{/users/withdraw}" method="post" onsubmit="return confirm('退会してもよろしいですか？')">
+            <button type="submit">退会する</button>
+        </form>
+    </section>
+
+    <a th:href="@{/menu}"><button type="button">戻る</button></a>
 </body>
 
 </html>

@@ -29,8 +29,8 @@
 
     <!-- 1件検索 -->
     <select id="selectById" resultType="jp.mizutani.bookstore.entity.Sales">
-       SELECT id, user_id AS userId, book_id AS bookId, 
-       quantity, created_at as createdAt FROM sales WHERE id = #{id}
+       SELECT id, user_id AS userId, book_id AS bookId,
+       quantity, status, created_at as createdAt FROM sales WHERE id = #{id}
     </select>
 
      <update id="updateStatusToShipped">

@@ -10,18 +10,22 @@
 <body>
     <h1>購入履歴</h1>
     <p>購入履歴：</p>
+    <p th:if="${message}" th:text="${message}"></p>
     <p>書籍名/購入数/注文日/配送ステータス</p>
-    <div th:each="sales : ${books}">
+    <div th:each="sales : ${books}" class="order-item">
         <p>書籍名：<span th:text="${sales.title}"></span></p>
         <p>購入数：<span th:text="${sales.quantity}"></span> 冊</p>
         <p>注文日：<span th:text="${sales.createdAt}"></span></p>
         <p>ステータス：<span th:text="${sales.status}"></span></p>
 
-        <form method="post">
+        <form th:if="${sales.status != '返却' && sales.status != '発送済'}" method="post">
             <input type="hidden" name="id" th:value="${sales.orderId}">
             <button type="submit" th:formaction="@{/return-product}">返却</button>
         </form>
+        <p th:if="${sales.status == '返却'}">返却済みです</p>
+        <p th:if="${sales.status == '発送済'}">発送済みのため返却できません</p>
     </div>
+    <a th:href="@{/users/mypage}"><button type="button">戻る</button></a>
 </body>
 
 </html>

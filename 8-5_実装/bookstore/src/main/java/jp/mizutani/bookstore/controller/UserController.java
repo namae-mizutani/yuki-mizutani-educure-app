@@ -1,6 +1,5 @@
 package jp.mizutani.bookstore.controller;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpSession;
-import jp.mizutani.bookstore.entity.Sales;
 import jp.mizutani.bookstore.entity.User;
 import jp.mizutani.bookstore.form.UserForm;
 import jp.mizutani.bookstore.repository.UserMapper;
@@ -102,9 +100,7 @@ public class UserController {
     @GetMapping("/purchasehistory")
     public String purchaseHistory(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loginUser");
-        List<Sales> books = userService.getPurchaseHistory(user.getId());
         model.addAttribute("books", userService.getPurchaseHistory(user.getId()));
-
         return "purchasehistory";
     }
 

@@ -3,24 +3,27 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>注文確認</title>
+    <title>お客様注文一覧</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
-    <form action="/shipping" method="post">
-        <h1>注文確認</h1>
-        <p>書籍名/購入数/注文日/配送ステータス</p>
-        <span th:each="book : ${books}">
-            <p th:text="${book.title}">/</p>
-            <p th:text="${book.quantity}">冊/</p>
-            <p th:text="${book.createdAt}">/</p>
-            <p th:text="${book.status}">/</p>
-            <input type="hidden" th:name="id" th:value="${book.orderId}">
+    <h1>お客様注文一覧</h1>
+    <p>書籍名/購入数/注文日/配送ステータス</p>
+    <p th:if="${message}" th:text="${message}"></p>
+    <div th:each="book : ${books}" class="order-item">
+        <p>書籍名：<span th:text="${book.title}"></span></p>
+        <p>購入数：<span th:text="${book.quantity}"></span> 冊</p>
+        <p>注文日：<span th:text="${book.createdAt}"></span></p>
+        <p>ステータス：<span th:text="${book.status}"></span></p>
+        <form th:if="${book.status != '返却' && book.status != '発送済'}" th:action="@{/shipping}" method="post">
+            <input type="hidden" name="id" th:value="${book.orderId}">
             <button type="submit">発送する</button>
-        </span>
-        <a th:href="@{/menu}">戻る</a>
-    </form>
+        </form>
+        <p th:unless="${book.status != '返却' && book.status != '発送済'}"
+           th:text="${book.status == '返却' ? '返却済みのため発送できません' : '発送済みです'}"></p>
+    </div>
+    <a th:href="@{/menu}"><button type="button">戻る</button></a>
 </body>
 
 </html>

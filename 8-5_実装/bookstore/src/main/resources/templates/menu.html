@@ -10,13 +10,16 @@
 <body>
     <h1>メニュー</h1>
     <ul>
-        <li><a th:href="@{/books/top}">本一覧</a></li>
+        <li><a th:href="@{/books/top}">販売書籍一覧</a></li>
+        <th:block th:if="${role == '会員'}">
+            <li><a th:href="@{/users/mypage}">マイページ</a></li>
+        </th:block>
 
         <th:block th:if="${role =='在庫管理者' || role == 'システム管理者'}">
-            <li><a th:href="@{/books/new}">新規登録</a></li>
+            <li><a th:href="@{/books/new}">新規書籍登録</a></li>
             <li><a th:href="@{/total}">売上集計</a></li>
-            <li><a th:href="@{/users/userlist}">ユーザー一覧</a></li>
-            <li><a th:href="@{/ordercheck}">注文確認</a></li>
+            <li><a th:href="@{/users/userlist}">利用者一覧</a></li>
+            <li><a th:href="@{/ordercheck}">お客様注文一覧</a></li>
         </th:block>
     </ul>
     <form th:action="@{/logout}" method="post">

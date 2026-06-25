@@ -6,3 +6,14 @@ button {
     color: #ffffff;
      border: none; 
 }
+
+.order-item {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.order-item:last-child {
+    margin-bottom: 0;
+}
