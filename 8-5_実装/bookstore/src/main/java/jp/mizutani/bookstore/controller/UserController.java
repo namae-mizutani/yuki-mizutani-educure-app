@@ -43,7 +43,6 @@ public class UserController {
         }
         User user = new User();
         user.setName(form.getName());
-        // user.setPassword(form.getPassword());
         user.setPassword(passwordEncoder.encode(form.getPassword()));
         user.setRole(form.getRole());
         userService.insert(user);
