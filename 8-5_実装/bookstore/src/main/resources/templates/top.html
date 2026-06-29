@@ -54,13 +54,6 @@
         </tbody>
     </table>
     <p th:if="${books.size() == 0}">該当する本は見つかりませんでした。</p>
-    <!-- <form th:if="${role == '会員'}" th:action="@{/users/mypage}" method="get">
-        <button type="submit">マイページへ</button>
-    </form>
-    <form th:if="${role == '会員'}" th:action="@{/logout}" method="post">
-        <button type="submit">ログアウト</button>
-    </form> -->
-
     <button type="button" th:onclick="|location.href='@{/menu}'|">戻る</button>
 </body>
 

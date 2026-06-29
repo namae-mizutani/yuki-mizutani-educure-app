@@ -12,7 +12,7 @@ public class UserForm {
     private int id;
     @Size(min = 1, max = 10, message = "10文字以内で入力してください")
     private String name;
-    @Size(min = 1, max = 10, message = "10文字以内で入力してください")
+    @Size(min = 5, max = 10, message = "5文字上10文字以内で入力してください")
     private String password;
     private String role;
 }
