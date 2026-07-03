@@ -110,8 +110,8 @@ public class LoginController {
         if (name == null) {
             return "redirect:/password_reset";
         }
-        if (password == null || password.isEmpty()) {
-            model.addAttribute("message", "パスワードを入力してください");
+        if (password == null || password.isEmpty() || password.length() < 5 || password.length() >10 || !password.matches("^[a-zA-Z0-9]+$") || password.contains(" ")) {
+            model.addAttribute("message", "パスワードを入力してください。パスワードは８文字以上１５文字以内の半角英数字で、スペースは含まないでください。");
             return "password_reset_completed";
         }
         User user = userMapper.selectByName(name);

@@ -78,6 +78,7 @@ public class UserController {
     @PostMapping("/update")
     public String userInformUpdate(@ModelAttribute UserForm form, Model model, HttpSession session) {
         User user = (User) session.getAttribute("loginUser");
+      
         if (user != null) {
             if (form.getName() == null || form.getName().isEmpty() ||
                     form.getPassword() == null || form.getPassword().isEmpty()) {
