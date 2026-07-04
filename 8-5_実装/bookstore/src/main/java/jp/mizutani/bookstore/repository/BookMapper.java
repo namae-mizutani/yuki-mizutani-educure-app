@@ -8,7 +8,7 @@ import jp.mizutani.bookstore.entity.Book;
 @Mapper
 public interface BookMapper {
 
-    List<Book> selectAll();
+    List<Book> selectAll(@Param("offset") int offset, @Param("pageSize")int pageSize);
 
     Book selectById(@Param("id") int id);
 
@@ -19,4 +19,6 @@ public interface BookMapper {
     void delete(int id);
 
     List<Book> searchBooks(@Param("title") String title);
+
+    int getBookCount();
 }

@@ -23,10 +23,10 @@ import java.io.InputStreamReader;
 public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
 
-    @Override
-    public List<Book> selectAll() {
-        return bookMapper.selectAll();
-    }
+    // @Override
+    // public List<Book> selectAll() {
+    //     return bookMapper.selectAll();
+    // }
 
     @Override
     public Book selectById(int id) {
@@ -50,7 +50,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void downloadCsv(PrintWriter writer) {
-        List<Book> books = bookMapper.selectAll();
+        List<Book> books = bookMapper.selectAll(0, Integer.MAX_VALUE);
 
         writer.println("ID,タイトル,価格,カテゴリー");
 
@@ -166,5 +166,15 @@ public class BookServiceImpl implements BookService {
             return null;
         }
         return book;
+    }
+
+    @Override
+    public List<Book> selectAll(int page, int pageSize) {
+        int offset = (page -1) * pageSize;
+        return bookMapper.selectAll(offset, pageSize);
+    }
+    @Override
+    public int getBookCount() {
+        return bookMapper.getBookCount();
     }
 }

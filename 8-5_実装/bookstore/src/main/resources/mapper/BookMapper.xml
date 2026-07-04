@@ -15,6 +15,9 @@
         SELECT b.id, b.title, b.price, b.category, s.stock 
         FROM books b
         LEFT JOIN stocks s ON b.id = s.book_id
+        ORDER BY b.id
+        LIMIT #{pageSize} OFFSET #{offset}
+        
     </select>
 
     <select id="searchBooks" resultType="jp.mizutani.bookstore.entity.Book">
@@ -31,4 +34,8 @@
     <delete id="delete">
         DELETE FROM books WHERE id = #{id}
     </delete>
+
+    <select id="getBookCount" resultType="int">
+        SELECT COUNT(*) FROM books
+    </select>
 </mapper>

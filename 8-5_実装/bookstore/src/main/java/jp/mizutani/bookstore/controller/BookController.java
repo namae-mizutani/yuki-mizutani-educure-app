@@ -39,15 +39,21 @@ public class BookController {
     private final StockMapper stockMapper;
 
     @GetMapping("/top")
-    public String top(HttpSession session, Model model) {
+    public String top(@RequestParam(defaultValue = "1") int page, HttpSession session, Model model) {
         User user = (User) session.getAttribute("loginUser");
 
         if (user != null) {
 
             model.addAttribute("role", user.getRole());
         }
-        List<Book> bookList = bookService.selectAll();
-        model.addAttribute("books", bookList);
+
+        int pageSize = 5;
+        List<Book> booklist = bookService.selectAll(page, pageSize);
+        int totalBooks = bookService.getBookCount();
+        int totalPages = (int) Math.ceil((double) totalBooks / pageSize);
+        model.addAttribute("books", booklist);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
         model.addAttribute("bookForm", new BookForm());
         return "top";
     }
@@ -226,4 +232,5 @@ public class BookController {
         bookMapper.insert(book);
         return "newbook_register_completed";
     }
+
 }

@@ -2,11 +2,13 @@ package jp.mizutani.bookstore.service;
 
 import java.io.PrintWriter;
 import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 import jp.mizutani.bookstore.entity.Book;
 
+
 public interface BookService {
-    List<Book> selectAll();
+    List<Book> selectAll(int page, int pageSize);
 
     Book selectById(int id);
 
@@ -23,4 +25,6 @@ public interface BookService {
     List<Book> searchBooks(String title);
 
     Book getBookInfoFromGoogle(String isbn);
+
+    int getBookCount();
 }

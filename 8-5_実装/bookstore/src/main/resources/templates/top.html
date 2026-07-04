@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <meta charset="UTF-8">
     <title>トップ画面</title>
+    <link rel="stylesheet"th:href="@{/css/style.css}">
 </head>
 
 <body>
@@ -55,6 +57,29 @@
     </table>
     <p th:if="${books.size() == 0}">該当する本は見つかりませんでした。</p>
     <button type="button" th:onclick="|location.href='@{/menu}'|">戻る</button>
+
+    <div class="mt-4" th:if="${totalPages > 0}">
+        <nav aria.label="Page navigation exaample">
+            <ul class="pagination">
+                <li th:classppend="${crrentPage == 1} ? 'disabled class'" class="page-item">
+                    <a class="page-link" th:href="@{/books/top(page=1)}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li th:each="pageNum : ${#numbers.sequence(1, totalPages)}"
+                    th:classappend="${pageNum == currentPage} ? 'active'" class="page-item">
+                    <a class="page-link" th:href="@{/books/top(page=${pageNum})}" th:text="${pageNum}"></a>
+                </li>
+                <li th:classppend="${currentPage == totalPages} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="@{/books/top(page=${totalPages})}" aria-label="Next"> <span
+                            aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </body>
 
 </html>
