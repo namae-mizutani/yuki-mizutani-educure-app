@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>トップ画面</title>
-    <link rel="stylesheet"th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
@@ -45,12 +45,11 @@
                 <td th:text="${book.stock}"></td>
                 <td>
                     <form th:if="${role == '会員'}" th:action="@{/books/purchase/{id}(id=${book.id})}">
-                        <button type="submit">購入</button>
-                    </form>
-
-                    <form th:if="${role == '在庫管理者'|| role == 'システム管理者'}" th:action="@{/books/edit/{id}(id=${book.id})}">
-                        <button type="submit">編集</button>
-                    </form>
+                        <button th:if="${book.stock > 0}">購入する</button>
+                        <form th:if="${role == '在庫管理者'|| role == 'システム管理者'}"
+                            th:action="@{/books/edit/{id}(id=${book.id})}">
+                            <button type="submit">編集</button>
+                        </form>
                 </td>
             </tr>
         </tbody>

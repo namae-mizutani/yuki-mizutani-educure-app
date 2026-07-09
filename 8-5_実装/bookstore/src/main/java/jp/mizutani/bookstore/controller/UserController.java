@@ -76,23 +76,27 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String userInformUpdate(@ModelAttribute UserForm form, Model model, HttpSession session) {
+    public String userInformUpdate(@Validated @ModelAttribute("user") UserForm form, BindingResult result, Model model,
+            HttpSession session) {
         User user = (User) session.getAttribute("loginUser");
-      
-        if (user != null) {
-            if (form.getName() == null || form.getName().isEmpty() ||
-                    form.getPassword() == null || form.getPassword().isEmpty()) {
 
-                model.addAttribute("user", user);
-                model.addAttribute("message", "名前とパスワードを入力してください。");
+        if (result.hasErrors()) {
+            return "mypage";
+        }
+        if (user != null) {
+
+            if (!form.getName().equals(user.getName()) && userMapper.findByName(form.getName())) {
+                model.addAttribute("message", "そのユーザーは既に登録されています。他の名前で入力してください。");
                 return "mypage";
             }
+
             user.setName(form.getName());
             user.setPassword(passwordEncoder.encode(form.getPassword()));
             userMapper.update(user);
             model.addAttribute("user", user);
             model.addAttribute("message", "変更しました。");
             return "mypage";
+
         }
         return "redirect:/login";
     }

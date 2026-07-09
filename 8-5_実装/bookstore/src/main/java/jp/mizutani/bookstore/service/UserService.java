@@ -21,4 +21,6 @@ public interface UserService {
     List<Sales> getPurchaseHistory(int id);
 
     boolean findByName(String name);
+
+    boolean findByPassword(String password);
 }

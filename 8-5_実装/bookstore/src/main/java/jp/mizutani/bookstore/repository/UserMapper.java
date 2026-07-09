@@ -22,4 +22,6 @@ public interface UserMapper {
     void update(User user);
 
     boolean findByName(String name);
+
+    boolean findByPassword(String password);
 }

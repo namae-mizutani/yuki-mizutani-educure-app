@@ -17,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import jp.mizutani.bookstore.form.UserForm;
 
 @Controller
 @RequiredArgsConstructor
@@ -73,8 +74,7 @@ public class LoginController {
     }
 
     @PostMapping("/password_reset_execute")
-    public String passwordResetExecute(@RequestParam String name,
-            HttpSession session, Model model) {
+    public String passwordResetExecute(@RequestParam("name") String name, HttpSession session, Model model) {
         User user = userMapper.selectByName(name);
         if (user != null) {
             session.setAttribute("resetUserName", name); // セッションに保存
@@ -85,7 +85,7 @@ public class LoginController {
     }
 
     @PostMapping("/password_reset_confirm")
-    public String passwordResetConfirm(@RequestParam String role,
+    public String passwordResetConfirm(@RequestParam("role") String role,
             HttpSession session, Model model) {
         String name = (String) session.getAttribute("resetUserName");
         if (name == null) {
@@ -96,6 +96,7 @@ public class LoginController {
         System.out.println("DBから取得した役職: [" + user.getRole() + "]");
         System.out.println("画面から送られた役職: [" + role + "]");
         if (user != null && user.getRole().equals(role)) {
+            model.addAttribute("userForm", new UserForm());
             return "password_reset_completed";
         }
         model.addAttribute("message", "役職が一致しません");
@@ -103,20 +104,25 @@ public class LoginController {
     }
 
     @PostMapping("/password_reset_update")
-    public String passwordResetUpdate(@RequestParam String password,
+    public String passwordResetUpdate(@Validated @ModelAttribute("userForm") UserForm form, BindingResult result,
             HttpSession session, Model model) {
 
         String name = (String) session.getAttribute("resetUserName");
         if (name == null) {
-            return "redirect:/password_reset";
+            return "redirect:/password_reset_update";
         }
-        if (password == null || password.isEmpty() || password.length() < 5 || password.length() >10 || !password.matches("^[a-zA-Z0-9]+$") || password.contains(" ")) {
-            model.addAttribute("message", "パスワードを入力してください。パスワードは８文字以上１５文字以内の半角英数字で、スペースは含まないでください。");
-            return "password_reset_completed";
+
+        if (result.hasErrors()) {
+            return "/password_reset_completed";
+        } else if (userMapper.findByPassword(form.getPassword())) {
+            model.addAttribute("message",
+                    "そのユーザーは既に登録されています。他のパスワードで入力してください。");
+            return "/password_reset_completed";
         }
+
         User user = userMapper.selectByName(name);
         if (user != null) {
-            user.setPassword(passwordEncoder.encode(password));
+            user.setPassword(passwordEncoder.encode(form.getPassword()));
             userMapper.update(user);
             session.removeAttribute("resetUserName");
             return "redirect:/";

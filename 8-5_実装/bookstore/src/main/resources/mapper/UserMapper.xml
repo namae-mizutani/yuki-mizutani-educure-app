@@ -23,6 +23,9 @@
         SELECT COUNT(*) > 0 FROM users WHERE user_name = #{name}
     </select>
 
+    <select id="findByPassword" resultType="boolean">
+        SELECT COUNT(*) > 0 FROM users WHERE password = #{password}
+    </select>
 
     <select id="selectAll" resultType="jp.mizutani.bookstore.entity.User">
         SELECT id,user_name as name, role, created_at as createdAt FROM users

@@ -56,4 +56,10 @@ public class UserServiceImpl implements UserService {
     public boolean findByName(String name) {
         return userMapper.findByName(name);
     }
+
+
+    @Override
+    public boolean findByPassword(String password) {
+        return userMapper.findByPassword(password);
+    }
 }
