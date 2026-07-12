@@ -28,7 +28,4 @@
         FROM books b 
         LEFT JOIN stocks s ON b.id = s.book_id
     </select>
-   
-    
-    
 </mapper>

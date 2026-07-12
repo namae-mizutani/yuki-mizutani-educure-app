@@ -8,22 +8,49 @@
 </head>
 
 <body>
+
     <h1>お客様注文一覧</h1>
     <p>書籍名/購入数/注文日/配送ステータス</p>
+    <p th:text="|${currentPage}/${totalPages}ページ|">1/2</p>
     <p th:if="${message}" th:text="${message}"></p>
     <div th:each="book : ${books}" class="order-item">
         <p>書籍名：<span th:text="${book.title}"></span></p>
         <p>購入数：<span th:text="${book.quantity}"></span> 冊</p>
         <p>注文日：<span th:text="${book.createdAt}"></span></p>
         <p>ステータス：<span th:text="${book.status}"></span></p>
-        <form th:if="${book.status != '返却' && book.status != '発送済'}" th:action="@{/shipping}" method="post">
+        <form th:if="${book.status != '返却' && book.status != '発送済' &&  book.status !='完了'}" th:action="@{/shipping}"
+            method="post">
             <input type="hidden" name="id" th:value="${book.orderId}">
             <button type="submit">発送する</button>
         </form>
         <p th:unless="${book.status != '返却' && book.status != '発送済'}"
-           th:text="${book.status == '返却' ? '返却済みのため発送できません' : '発送済みです'}"></p>
+            th:text="${book.status == '返却' ? '購入中止' : '発送済みです'}"></p>
     </div>
     <a th:href="@{/menu}"><button type="button">戻る</button></a>
+
+    <div class="mt-4" th:if="${totalPages > 0}">
+        <nav aria.label="Page navigation exaample">
+            <ul class="pagination">
+                <li th:classppend="${crrentPage == 1} ? 'disabled class'" class="page-item">
+                    <a class="page-link" th:href="@{/ordercheck(page=1)}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li th:each="pageNum : ${#numbers.sequence(1, totalPages)}"
+                    th:classappend="${pageNum == currentPage} ? 'active'" class="page-item">
+                    <a class="page-link" th:href="@{/ordercheck(page=${pageNum})}" th:text="${pageNum}"></a>
+                </li>
+                <li th:classppend="${currentPage == totalPages} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="@{/ordercheck(page=${currentPage + 1})}"
+                        th:if="${currentPage < totalPages}" aria-label="Next">
+                        <span th:if="${currentPage >= totalPages}" aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </body>
 
 </html>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import jp.mizutani.bookstore.entity.Sales;
+import jp.mizutani.bookstore.form.SalesForm;
 import jp.mizutani.bookstore.repository.SalesMapper;
 import jp.mizutani.bookstore.service.SalesService;
 
@@ -42,5 +43,21 @@ public class SalesServiceImpl implements SalesService {
     @Override
     public void updateStatus(int id, String status) {
         salesMapper.updateStatus(status, id);
+    }
+
+    @Override
+    public void csvInsert(Sales sales) {
+        salesMapper.csvInsert(sales);
+    }
+
+    @Override
+    public List<SalesForm> findAllOrders(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        return salesMapper.findAllOrders(offset, pageSize);
+    }
+
+    @Override
+    public int getOrdercount() {
+        return salesMapper.getOrderCount();
     }
 }

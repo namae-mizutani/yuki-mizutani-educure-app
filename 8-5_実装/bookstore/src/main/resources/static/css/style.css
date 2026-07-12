@@ -4,7 +4,7 @@ button {
     background-attachment: center;
     background-color: #1dcd14;
     color: #ffffff;
-     border: none; 
+    border: none;
 }
 
 .order-item {
@@ -33,13 +33,21 @@ button {
 }
 
 .page-item.active.page-link {
-    z-index:1;
+    z-index: 1;
     color: #fff;
-    background-color:#007bff;
+    background-color: #007bff;
 }
 
 .pagination {
     display: flex;
     list-style: none;
     padding-left: 0;
+}
+
+.btn-red {
+    background-attachment: center;
+    background-color: #cd2714;
+    color: #ffffff;
+    border: none;
+    margin-left: 270px; 
 }

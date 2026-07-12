@@ -44,7 +44,7 @@
         <h2>退会</h2>
         <p>アカウントを削除してサービスから退会します。</p>
         <form th:action="@{/users/withdraw}" method="post" onsubmit="return confirm('退会してもよろしいですか？')">
-            <button type="submit">退会する</button>
+            <button type="submit" class="btn-red">退会する</button>
         </form>
     </section>
 
