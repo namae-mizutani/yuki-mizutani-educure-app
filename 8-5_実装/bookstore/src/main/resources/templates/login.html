@@ -21,8 +21,6 @@
         <p th:if="${message}" th:text="${message}" style="color: red;"></p>
         <button type="submit">ログイン</button>
     </form>
-    <a th:href="@{/users/newuser_registration}">
-        <button type="button">新規登録</button>
-    </a>
+    <button type="button" onclick="location.href='/users/newuser_registration'">新規登録</button>
     <a th:href="@{/password_reset}">[パスワードリセット]</a>
 </body>

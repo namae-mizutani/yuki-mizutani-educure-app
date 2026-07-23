@@ -1,8 +1,8 @@
 package jp.mizutani.bookstore.service.impl;
 
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,21 +12,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import jp.mizutani.bookstore.entity.Book;
+import jp.mizutani.bookstore.entity.Sales;
 import jp.mizutani.bookstore.repository.BookMapper;
 import jp.mizutani.bookstore.service.BookService;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import jp.mizutani.bookstore.repository.SalesMapper;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
-
-    // @Override
-    // public List<Book> selectAll() {
-    //     return bookMapper.selectAll();
-    // }
+    private final SalesMapper salesMapper;
 
     @Override
     public Book selectById(int id) {
@@ -64,11 +62,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void uploadCsv(MultipartFile file) throws Exception {
-
-        if (file.isEmpty()) {
-            throw new Exception("ファイルが空です");
-        }
-
         String charset = "UTF-8";
         byte[] bytes = file.getBytes();
         try {
@@ -87,33 +80,36 @@ public class BookServiceImpl implements BookService {
 
             while ((line = br.readLine()) != null) {
                 lineNumber++;
-
                 if (line.trim().isEmpty()) {
                     continue;
                 }
-
                 String[] data = line.split(",");
-
                 if (data.length < 4) {
                     throw new Exception(lineNumber + "行目: 列数が不足しています（" + data.length + "列）");
                 }
-
-                int price;
-                try {
-                    price = Integer.parseInt(data[2].trim());
-                } catch (NumberFormatException e) {
-                    throw new Exception(lineNumber + "行目: 価格に数字以外の値が入っています→「" + data[2] + "」");
+                if (data[0].trim().isEmpty() ||
+                        data[1].trim().isEmpty() ||
+                        data[2].trim().isEmpty() ||
+                        data[3].trim().isEmpty()) {
+                    throw new Exception(lineNumber + "行目: 空欄が含まれています");
                 }
-
-                if (price < 0) {
-                    throw new Exception(lineNumber + "行目: 価格に負の値は設定できません→「" + price + "」");
+                Sales sales = new Sales();
+                String title = data[0].trim();
+                Integer bookId = bookMapper.findByIdTitle(title);
+                if (bookId == null) {
+                    throw new Exception("書籍が見つかりません: " + data[0]);
                 }
+                sales.setUserId(1); // 制約回避用の固定値
+                sales.setBookId(bookId);
+                sales.setQuantity(Integer.parseInt(data[1].trim()));
+                sales.setTotalSales(Integer.parseInt(data[2].trim()));
+                sales.setStatus("完了"); // 制約回避用の固定値
 
-                Book book = new Book();
-                book.setTitle(data[1].trim());
-                book.setPrice(price);
-                book.setCategory(data[3].trim());
-                bookMapper.insert(book);
+                String dateStr = data[3].trim().replace("/", "-");
+                LocalDate date = LocalDate.parse(dateStr);
+                sales.setCreatedAt(date);
+
+                salesMapper.csvInsert(sales);
             }
         }
     }
@@ -170,9 +166,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> selectAll(int page, int pageSize) {
-        int offset = (page -1) * pageSize;
+        int offset = (page - 1) * pageSize;
         return bookMapper.selectAll(offset, pageSize);
     }
+
     @Override
     public int getBookCount() {
         return bookMapper.getBookCount();

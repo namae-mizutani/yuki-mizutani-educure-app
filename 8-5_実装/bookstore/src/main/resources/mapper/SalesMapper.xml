@@ -6,6 +6,7 @@
         FROM sales s
         JOIN books b ON s.book_id = b.id
         ORDER BY s.created_at DESC
+        LIMIT #{pageSize} OFFSET #{offset}
     </select>
 
     <select id="selectByUserId" resultType="jp.mizutani.bookstore.entity.Sales">
@@ -51,6 +52,15 @@
     <!-- 全件検索 -->
     <select id="selectAll" resultType="jp.mizutani.bookstore.entity.Sales">
         SELECT id, user_id AS userId, book_id AS bookId, quantity, stock, created_at as createdAt
+    </select>
+
+    <insert id="csvInsert">
+        INSERT INTO sales (user_id, book_id, quantity, status, created_at)
+        VALUES (#{userId}, #{bookId}, #{quantity}, #{status}, #{createdAt})
+    </insert>
+
+    <select id="getOrderCount" resultType="int">
+        SELECT COUNT(*) FROM sales
     </select>
 
 </mapper>

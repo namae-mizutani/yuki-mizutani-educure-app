@@ -35,7 +35,11 @@
         DELETE FROM books WHERE id = #{id}
     </delete>
 
-    <select id="getBookCount" resultType="int">
+    <select id="getBookCount" resultType="Integer">
         SELECT COUNT(*) FROM books
+    </select>
+
+    <select id="findByIdTitle" resultType="Integer">
+        SELECT id FROM books WHERE title = #{title}
     </select>
 </mapper>

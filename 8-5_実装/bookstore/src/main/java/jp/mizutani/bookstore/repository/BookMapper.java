@@ -21,4 +21,6 @@ public interface BookMapper {
     List<Book> searchBooks(@Param("title") String title);
 
     int getBookCount();
+
+    Integer findByIdTitle(@Param("title") String title);
 }

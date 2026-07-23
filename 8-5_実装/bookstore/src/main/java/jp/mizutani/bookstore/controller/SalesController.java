@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+
+import jakarta.servlet.http.HttpSession;
 import jp.mizutani.bookstore.entity.Sales;
 import jp.mizutani.bookstore.form.SalesForm;
 import jp.mizutani.bookstore.repository.SalesMapper;
@@ -60,8 +62,14 @@ public class SalesController {
     }
 
     @GetMapping("/ordercheck")
-    public String displayOrderCheck(Model model) {
-        model.addAttribute("books", salesMapper.findAllOrders());
+    public String displayOrderCheck(@RequestParam(defaultValue = "1") int page, HttpSession session, Model model) {
+        int pageSize = 10;
+        List <SalesForm> salesList = salesService.findAllOrders(page, pageSize);
+        int totalOrders = salesService.getOrdercount();
+        int totalPages = (int) Math.ceil((double)totalOrders / pageSize);
+        model.addAttribute("books",salesList);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
         return "ordercheck";
     }
 

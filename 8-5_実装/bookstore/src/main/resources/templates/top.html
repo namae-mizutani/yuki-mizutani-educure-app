@@ -24,9 +24,9 @@
     </form>
 
     <table border="1" `>
+        <p th:text="|${currentPage}/${totalPages}ページ|">1/2</p>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>書籍名</th>
                 <th>価格</th>
                 <th>カテゴリ</th>
@@ -36,7 +36,6 @@
         </thead>
         <tbody>
             <tr th:each="book : ${books}">
-                <td th:text="${book.id}"></td>
                 <td th:text="${book.title}"></td>
                 <td th:text="${book.price}"></td>
                 <td>
@@ -46,10 +45,10 @@
                 <td>
                     <form th:if="${role == '会員'}" th:action="@{/books/purchase/{id}(id=${book.id})}">
                         <button th:if="${book.stock > 0}">購入する</button>
-                        <form th:if="${role == '在庫管理者'|| role == 'システム管理者'}"
-                            th:action="@{/books/edit/{id}(id=${book.id})}">
-                            <button type="submit">編集</button>
-                        </form>
+                    </form>
+                    <form th:if="${role == '在庫管理者'|| role == 'システム管理者'}" th:action="@{/books/edit/{id}(id=${book.id})}">
+                        <button type="submit">編集</button>
+                    </form>
                 </td>
             </tr>
         </tbody>
@@ -71,8 +70,9 @@
                     <a class="page-link" th:href="@{/books/top(page=${pageNum})}" th:text="${pageNum}"></a>
                 </li>
                 <li th:classppend="${currentPage == totalPages} ? 'disabled'" class="page-item">
-                    <a class="page-link" th:href="@{/books/top(page=${totalPages})}" aria-label="Next"> <span
-                            aria-hidden="true">&raquo;</span>
+                    <a class="page-link" th:href="@{/books/top(page=${currentPage + 1})}"
+                        th:if="${currentPage < totalPages}" aria-label="Next"> <span
+                            th:if="${currentPage >= totalPages}" aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </a>
                 </li>

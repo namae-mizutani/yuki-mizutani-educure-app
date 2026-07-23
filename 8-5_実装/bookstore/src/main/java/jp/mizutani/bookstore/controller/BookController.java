@@ -2,6 +2,7 @@ package jp.mizutani.bookstore.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import jp.mizutani.bookstore.entity.Sales;
 import jp.mizutani.bookstore.entity.Stock;
 import jp.mizutani.bookstore.entity.User;
 import jp.mizutani.bookstore.form.BookForm;
+import jp.mizutani.bookstore.form.SalesForm;
 import jp.mizutani.bookstore.repository.BookMapper;
 import jp.mizutani.bookstore.repository.StockMapper;
 import jp.mizutani.bookstore.service.BookService;
@@ -25,6 +27,8 @@ import jp.mizutani.bookstore.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
@@ -88,7 +92,6 @@ public class BookController {
     public String purchase(@PathVariable("id") int id, Model model) {
         Book book = bookService.selectById(id);
         model.addAttribute("book", book);
-
         return "purchase";
     }
 
@@ -122,7 +125,6 @@ public class BookController {
         sales.setUserId(user.getId());
         sales.setBookId(id);
         sales.setQuantity(quantity);
-
         salesService.insert(sales);
 
         return "purchase_completed";
@@ -154,9 +156,7 @@ public class BookController {
         bookService.update(book);
 
         Stock stock = stockService.selectById(id);
-
         stock.setStock(stockCount);
-
         stockService.update(stock);
         model.addAttribute("message", "商品の更新が完了しました。");
 
@@ -188,30 +188,64 @@ public class BookController {
 
         return "product_edit_completed";
     }
+   
+    @PostMapping("csvdownload")
+    public String downloadCsv(@ModelAttribute SalesForm salesForm, Model model,
+            HttpServletResponse response)
+            throws IOException {
+        if (salesForm.getStartDate() == null || salesForm.getStartDate().isEmpty() ||
+                salesForm.getEndDate() == null || salesForm.getEndDate().isEmpty()) {
 
-    @GetMapping("apidownload")
-    public void downloadCsv(HttpServletResponse response) throws IOException {
+            model.addAttribute("message", "日付を入力してください");
+            model.addAttribute("salesList", new ArrayList<Sales>());
+            return "sales_tally";
+        }
+
+        java.time.LocalDate start = java.time.LocalDate.parse(salesForm.getStartDate());
+        java.time.LocalDate end = java.time.LocalDate.parse(salesForm.getEndDate());
+
+        if (start.isAfter(end)) {
+            model.addAttribute("message", "終了日は開始日より後にしてください");
+            model.addAttribute("salesList", new ArrayList<Sales>());
+            return "sales_tally";
+        }
         response.setContentType("text/csv; charset=UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=books.csv");
 
         response.setCharacterEncoding("UTF-8"); // 明示的にエンコーディングを指定
         PrintWriter writer = response.getWriter();
         writer.write('\ufeff');
-        bookService.downloadCsv(writer);
+        String startDate = salesForm.getStartDate();
+        String endDate = salesForm.getEndDate();
+        List<Sales> salesList = salesService.findAllGroupedByTitle(startDate, endDate);
+        writer.println("期間：" + startDate + "〜" + endDate);
+        writer.println("書籍名,売れた数,売上金額");
+        for (Sales sales : salesList) {
+            writer.println(sales.getTitle() + "," + sales.getSalesAmount() + "," + sales.getTotalSales());
+        }
         writer.flush();
+        return null;
     }
 
-    @PostMapping("apiupload")
-    public String uploadCsv(@RequestParam("file") MultipartFile file) throws Exception {
-        bookService.uploadCsv(file);
-
+     /**
+     *CSVインポート仕様:
+     *必須項目:書籍名、販売数、販売合計金額、販売日 
+     */
+    @PostMapping("/total")
+    public String uploadCsv(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes)
+            throws Exception {
+        try {
+            bookService.uploadCsv(file);
+            redirectAttributes.addFlashAttribute("msg", "CSVのアップロードが成功しました");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("msg", "エラーが発生しました。" + e.getMessage());
+        }
         return "redirect:/total";
     }
 
     @GetMapping("/api")
     public String getBook(@RequestParam("isbn") String isbn, Model model) {
         Book googleBook = bookService.getBookInfoFromGoogle(isbn);
-
         if (googleBook == null) {
             model.addAttribute("errorMessage", "書籍情報が取得できませんでした。ISBNを確認するか、手動で入力してください。");
             model.addAttribute("bookForm", new BookForm());
@@ -232,5 +266,4 @@ public class BookController {
         bookMapper.insert(book);
         return "newbook_register_completed";
     }
-
 }
