@@ -1,0 +1,75 @@
+[33m27738be[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m HEAD@{0}: pull origin develop: Fast-forward
+[33m0a83545[m HEAD@{1}: checkout: moving from feature/ui-csv-pagination to develop
+[33m2a49212[m[33m ([m[1;32mfeature/ui-csv-pagination[m[33m)[m HEAD@{2}: reset: moving to HEAD
+[33m2a49212[m[33m ([m[1;32mfeature/ui-csv-pagination[m[33m)[m HEAD@{3}: pull origin develop: Merge made by the 'ort' strategy.
+[33mc325fa7[m HEAD@{4}: commit: fix:タイポ,pagination-hide,Bootstrap_add,csv_move_button　
+[33mf99b03a[m[33m ([m[1;31morigin/feature/ui-csv-pagination[m[33m)[m HEAD@{5}: commit: Fix: button
+[33m0a83545[m HEAD@{6}: checkout: moving from develop to feature/ui-csv-pagination
+[33m0a83545[m HEAD@{7}: commit: Fix:Uiページネーション,csv
+[33md587919[m HEAD@{8}: commit: fix:バリデーション、色、buttonの非表示
+[33m8e2d235[m HEAD@{9}: commit: add:ページネーション
+[33m9974380[m HEAD@{10}: commit: fix
+[33m5e8c5f6[m HEAD@{11}: commit: fix
+[33m39876e8[m HEAD@{12}: commit: fix
+[33mc48d4ea[m HEAD@{13}: commit: 修正
+[33m4f55c48[m HEAD@{14}: pull origin develop: Fast-forward
+[33m7477410[m HEAD@{15}: checkout: moving from develop to develop
+[33m7477410[m HEAD@{16}: pull origin develop: Fast-forward
+[33mc3e4b3c[m HEAD@{17}: checkout: moving from feature/api-error-handling to develop
+[33m57b6b17[m[33m ([m[1;32mfeature/api-error-handling[m[33m)[m HEAD@{18}: commit (merge): conflict: 衝突を解消
+[33m356d054[m HEAD@{19}: checkout: moving from fix to feature/api-error-handling
+[33mfd9517c[m[33m ([m[1;32mfix[m[33m)[m HEAD@{20}: commit: fix:エラー対処とUI改善
+[33mdb83aeb[m[33m ([m[1;31morigin/fix[m[33m)[m HEAD@{21}: checkout: moving from feature/api-error-handling to fix
+[33m356d054[m HEAD@{22}: checkout: moving from develop to feature/api-error-handling
+[33mc3e4b3c[m HEAD@{23}: pull origin develop: Fast-forward
+[33m408a179[m HEAD@{24}: checkout: moving from fix to develop
+[33mdb83aeb[m[33m ([m[1;31morigin/fix[m[33m)[m HEAD@{25}: reset: moving to HEAD
+[33mdb83aeb[m[33m ([m[1;31morigin/fix[m[33m)[m HEAD@{26}: commit: 修正
+[33m2831353[m HEAD@{27}: commit: 修正
+[33m408a179[m HEAD@{28}: checkout: moving from develop to fix
+[33m408a179[m HEAD@{29}: checkout: moving from develop to develop
+[33m408a179[m HEAD@{30}: commit: fix
+[33m29415b9[m HEAD@{31}: commit: fix
+[33m2ffdbec[m HEAD@{32}: commit: update README
+[33me165fbc[m HEAD@{33}: pull origin develop: Fast-forward
+[33ma8258a6[m HEAD@{34}: commit: 提出
+[33m6ab0d1b[m HEAD@{35}: commit: 修正中
+[33mf17928c[m HEAD@{36}: commit: 修正
+[33mf331854[m HEAD@{37}: commit: 作成中
+[33m4523b93[m HEAD@{38}: reset: moving to HEAD~
+[33mce12923[m HEAD@{39}: commit: 作成中
+[33m4523b93[m HEAD@{40}: commit: 修正
+[33md8ed52d[m HEAD@{41}: commit: 不要なファイルを削除
+[33m6183a66[m HEAD@{42}: commit: add gitignore
+[33m8833c86[m HEAD@{43}: commit: 修正
+[33m68756e8[m HEAD@{44}: commit: 修正完了
+[33m96a1338[m[33m ([m[1;32mmain[m[33m)[m HEAD@{45}: checkout: moving from main to develop
+[33m96a1338[m[33m ([m[1;32mmain[m[33m)[m HEAD@{46}: commit: 8-3課題修正
+[33mf792def[m HEAD@{47}: commit: READMEの更新および開発環境の明文化
+[33m9469280[m HEAD@{48}: commit: 8-3課題修正
+[33m816cf2d[m HEAD@{49}: commit: 8-3課題修正
+[33m665c36a[m HEAD@{50}: commit: 8-４課題提出
+[33mb2a2710[m HEAD@{51}: commit: 8-3課題修正
+[33m1728a7d[m HEAD@{52}: commit: 8-3課題修正
+[33mde605a0[m HEAD@{53}: commit: 8-3課題修正
+[33m0fc0b27[m HEAD@{54}: commit: 8-3課題修正
+[33m9915b58[m HEAD@{55}: commit: 8-3課題修正
+[33mf6bc087[m HEAD@{56}: commit: 8-3課題修正
+[33mabf0fff[m HEAD@{57}: commit: 8-3課題修正
+[33m195ea1f[m HEAD@{58}: commit: 8-3課題修正
+[33m5e658ea[m HEAD@{59}: commit: 8-3課題修正
+[33m8742d9c[m HEAD@{60}: commit: 8-3課題修正
+[33m8d8b74e[m HEAD@{61}: commit: 8-3課題修正
+[33m897599a[m HEAD@{62}: commit: 8-3課題修正
+[33m1f65c56[m HEAD@{63}: commit: 8-3課題提出
+[33m753c892[m HEAD@{64}: commit: 8-3課題修正
+[33m7d04121[m HEAD@{65}: commit: 8-3課題提出
+[33m5589940[m HEAD@{66}: commit: 8-3課題修正
+[33m108d9c8[m HEAD@{67}: commit: 8-3課題修正
+[33m763c0db[m HEAD@{68}: commit: 　8-3課題修正
+[33mf0acee4[m HEAD@{69}: commit: 8-3課題提出
+[33m7b358b0[m HEAD@{70}: Branch: renamed refs/heads/develop to refs/heads/main
+[33m7b358b0[m HEAD@{72}: commit: first commit
+[33mcfb3a51[m HEAD@{73}: commit: 追加
+[33m08dbfea[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{74}: checkout: moving from master to develop
+[33m08dbfea[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{75}: commit (initial): フォルダ構成作成

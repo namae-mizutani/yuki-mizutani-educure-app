@@ -22,10 +22,10 @@
             <span th:text="${book.salesAmount}">0</span>冊 /
             <span th:text="${book.totalSales}">0</span>円
         </div>
+        <button type="submit" th:formaction="@{/books/csvdownload}">CSV出力</button>
     </form>
 
     <div>
-        <button type="submit" th:formaction="@{/books/csvdownload}">CSV出力</button>
         <br>
         <br>
 
@@ -37,6 +37,7 @@
             <button type="submit">CSVアップロード</button>
             <p th:if="${msg}" th:text="${msg}" style="color: red;"></p>
         </form>
+        <br>
         <a th:href="@{/menu}"><button type="button">戻る</button></a>
     </div>
 </body>
